@@ -1,0 +1,306 @@
+{
+  "serviceCode": "ec2",
+  "region": "us-east-1",
+  "pricingType": "compute",
+  "pricingData": {
+    "instanceTypes": {
+      "t2.micro": {
+        "onDemand": {
+          "linux": 0.0116,
+          "windows": 0.0162,
+          "rhel": 0.0216,
+          "suse": 0.0186
+        },
+        "reserved1Year": {
+          "noUpfront": 0.0081,
+          "partialUpfront": 0.0069,
+          "allUpfront": 0.0058
+        },
+        "reserved3Year": {
+          "noUpfront": 0.0058,
+          "partialUpfront": 0.0045,
+          "allUpfront": 0.0035
+        },
+        "spotDiscount": 0.70
+      },
+      "t2.small": {
+        "onDemand": {
+          "linux": 0.023,
+          "windows": 0.034,
+          "rhel": 0.043,
+          "suse": 0.037
+        },
+        "reserved1Year": {
+          "noUpfront": 0.016,
+          "partialUpfront": 0.014,
+          "allUpfront": 0.012
+        },
+        "reserved3Year": {
+          "noUpfront": 0.012,
+          "partialUpfront": 0.009,
+          "allUpfront": 0.007
+        },
+        "spotDiscount": 0.70
+      },
+      "t2.medium": {
+        "onDemand": {
+          "linux": 0.0464,
+          "windows": 0.0672,
+          "rhel": 0.0864,
+          "suse": 0.0744
+        },
+        "reserved1Year": {
+          "noUpfront": 0.032,
+          "partialUpfront": 0.028,
+          "allUpfront": 0.024
+        },
+        "reserved3Year": {
+          "noUpfront": 0.024,
+          "partialUpfront": 0.018,
+          "allUpfront": 0.014
+        },
+        "spotDiscount": 0.70
+      },
+      "t2.large": {
+        "onDemand": {
+          "linux": 0.0928,
+          "windows": 0.1344,
+          "rhel": 0.1728,
+          "suse": 0.1488
+        },
+        "reserved1Year": {
+          "noUpfront": 0.065,
+          "partialUpfront": 0.056,
+          "allUpfront": 0.048
+        },
+        "reserved3Year": {
+          "noUpfront": 0.048,
+          "partialUpfront": 0.036,
+          "allUpfront": 0.028
+        },
+        "spotDiscount": 0.70
+      },
+      "t3.micro": {
+        "onDemand": {
+          "linux": 0.0104,
+          "windows": 0.0146,
+          "rhel": 0.0194,
+          "suse": 0.0168
+        },
+        "reserved1Year": {
+          "noUpfront": 0.0073,
+          "partialUpfront": 0.0062,
+          "allUpfront": 0.0052
+        },
+        "reserved3Year": {
+          "noUpfront": 0.0052,
+          "partialUpfront": 0.0041,
+          "allUpfront": 0.0031
+        },
+        "spotDiscount": 0.70
+      },
+      "t3.small": {
+        "onDemand": {
+          "linux": 0.0208,
+          "windows": 0.0306,
+          "rhel": 0.0388,
+          "suse": 0.0334
+        },
+        "reserved1Year": {
+          "noUpfront": 0.0146,
+          "partialUpfront": 0.0124,
+          "allUpfront": 0.0104
+        },
+        "reserved3Year": {
+          "noUpfront": 0.0104,
+          "partialUpfront": 0.0082,
+          "allUpfront": 0.0062
+        },
+        "spotDiscount": 0.70
+      },
+      "t3.medium": {
+        "onDemand": {
+          "linux": 0.0416,
+          "windows": 0.0612,
+          "rhel": 0.0776,
+          "suse": 0.0668
+        },
+        "reserved1Year": {
+          "noUpfront": 0.0291,
+          "partialUpfront": 0.0248,
+          "allUpfront": 0.0208
+        },
+        "reserved3Year": {
+          "noUpfront": 0.0208,
+          "partialUpfront": 0.0164,
+          "allUpfront": 0.0124
+        },
+        "spotDiscount": 0.70
+      },
+      "t3.large": {
+        "onDemand": {
+          "linux": 0.0832,
+          "windows": 0.1224,
+          "rhel": 0.1552,
+          "suse": 0.1336
+        },
+        "reserved1Year": {
+          "noUpfront": 0.0582,
+          "partialUpfront": 0.0496,
+          "allUpfront": 0.0416
+        },
+        "reserved3Year": {
+          "noUpfront": 0.0416,
+          "partialUpfront": 0.0328,
+          "allUpfront": 0.0248
+        },
+        "spotDiscount": 0.70
+      },
+      "m5.large": {
+        "onDemand": {
+          "linux": 0.096,
+          "windows": 0.188,
+          "rhel": 0.186,
+          "suse": 0.156
+        },
+        "reserved1Year": {
+          "noUpfront": 0.067,
+          "partialUpfront": 0.058,
+          "allUpfront": 0.048
+        },
+        "reserved3Year": {
+          "noUpfront": 0.048,
+          "partialUpfront": 0.038,
+          "allUpfront": 0.029
+        },
+        "spotDiscount": 0.70
+      },
+      "m5.xlarge": {
+        "onDemand": {
+          "linux": 0.192,
+          "windows": 0.376,
+          "rhel": 0.372,
+          "suse": 0.312
+        },
+        "reserved1Year": {
+          "noUpfront": 0.134,
+          "partialUpfront": 0.116,
+          "allUpfront": 0.096
+        },
+        "reserved3Year": {
+          "noUpfront": 0.096,
+          "partialUpfront": 0.076,
+          "allUpfront": 0.058
+        },
+        "spotDiscount": 0.70
+      },
+      "m5.2xlarge": {
+        "onDemand": {
+          "linux": 0.384,
+          "windows": 0.752,
+          "rhel": 0.744,
+          "suse": 0.624
+        },
+        "reserved1Year": {
+          "noUpfront": 0.269,
+          "partialUpfront": 0.232,
+          "allUpfront": 0.192
+        },
+        "reserved3Year": {
+          "noUpfront": 0.192,
+          "partialUpfront": 0.152,
+          "allUpfront": 0.116
+        },
+        "spotDiscount": 0.70
+      },
+      "c5.large": {
+        "onDemand": {
+          "linux": 0.085,
+          "windows": 0.177,
+          "rhel": 0.175,
+          "suse": 0.145
+        },
+        "reserved1Year": {
+          "noUpfront": 0.060,
+          "partialUpfront": 0.051,
+          "allUpfront": 0.043
+        },
+        "reserved3Year": {
+          "noUpfront": 0.043,
+          "partialUpfront": 0.034,
+          "allUpfront": 0.026
+        },
+        "spotDiscount": 0.70
+      },
+      "c5.xlarge": {
+        "onDemand": {
+          "linux": 0.170,
+          "windows": 0.354,
+          "rhel": 0.350,
+          "suse": 0.290
+        },
+        "reserved1Year": {
+          "noUpfront": 0.119,
+          "partialUpfront": 0.102,
+          "allUpfront": 0.085
+        },
+        "reserved3Year": {
+          "noUpfront": 0.085,
+          "partialUpfront": 0.068,
+          "allUpfront": 0.051
+        },
+        "spotDiscount": 0.70
+      },
+      "r5.large": {
+        "onDemand": {
+          "linux": 0.126,
+          "windows": 0.252,
+          "rhel": 0.216,
+          "suse": 0.186
+        },
+        "reserved1Year": {
+          "noUpfront": 0.088,
+          "partialUpfront": 0.076,
+          "allUpfront": 0.063
+        },
+        "reserved3Year": {
+          "noUpfront": 0.063,
+          "partialUpfront": 0.050,
+          "allUpfront": 0.038
+        },
+        "spotDiscount": 0.70
+      },
+      "r5.xlarge": {
+        "onDemand": {
+          "linux": 0.252,
+          "windows": 0.504,
+          "rhel": 0.432,
+          "suse": 0.372
+        },
+        "reserved1Year": {
+          "noUpfront": 0.176,
+          "partialUpfront": 0.152,
+          "allUpfront": 0.126
+        },
+        "reserved3Year": {
+          "noUpfront": 0.126,
+          "partialUpfront": 0.100,
+          "allUpfront": 0.076
+        },
+        "spotDiscount": 0.70
+      }
+    },
+    "ebs": {
+      "gp2": 0.10,
+      "gp3": 0.08,
+      "gp3Iops": 0.005,
+      "gp3Throughput": 0.04,
+      "io1Storage": 0.125,
+      "io1Iops": 0.065,
+      "st1": 0.045,
+      "sc1": 0.015
+    }
+  },
+  "effectiveDate": "2025-01-01T00:00:00.000Z",
+  "version": 1
+}
