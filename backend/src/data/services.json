@@ -1,0 +1,278 @@
+[
+  {
+    "code": "ec2",
+    "name": "EC2",
+    "fullName": "Elastic Compute Cloud",
+    "description": "Secure and resizable compute capacity for virtually any workload",
+    "category": "compute",
+    "icon": "compute",
+    "configSchema": {
+      "fields": [
+        {
+          "name": "region",
+          "type": "dropdown",
+          "label": "Region",
+          "required": true,
+          "options": "fetch_from_regions",
+          "default": "us-east-1"
+        },
+        {
+          "name": "instanceType",
+          "type": "searchable-dropdown",
+          "label": "Instance Type",
+          "required": true,
+          "options": ["t2.micro", "t2.small", "t2.medium", "t2.large", "t3.micro", "t3.small", "t3.medium", "t3.large", "m5.large", "m5.xlarge", "m5.2xlarge", "c5.large", "c5.xlarge", "r5.large", "r5.xlarge"],
+          "default": "t2.micro"
+        },
+        {
+          "name": "operatingSystem",
+          "type": "dropdown",
+          "label": "Operating System",
+          "required": true,
+          "options": ["Linux", "Windows", "RHEL", "SUSE"],
+          "default": "Linux"
+        },
+        {
+          "name": "pricingModel",
+          "type": "dropdown",
+          "label": "Pricing Model",
+          "required": true,
+          "options": ["On-Demand", "Reserved 1-year", "Reserved 3-year", "Spot"],
+          "default": "On-Demand"
+        },
+        {
+          "name": "usage",
+          "type": "number",
+          "label": "Usage (hours per month)",
+          "required": true,
+          "default": 730,
+          "min": 1,
+          "max": 730,
+          "helpText": "730 hours = 24/7 operation for a month"
+        },
+        {
+          "name": "instances",
+          "type": "number",
+          "label": "Number of Instances",
+          "required": true,
+          "default": 1,
+          "min": 1
+        },
+        {
+          "name": "dataTransferOut",
+          "type": "number",
+          "label": "Data Transfer Out (GB per month)",
+          "required": false,
+          "default": 0,
+          "min": 0,
+          "helpText": "Data transferred out to the internet"
+        }
+      ]
+    },
+    "availableRegions": ["us-east-1", "us-east-2", "us-west-1", "us-west-2", "eu-west-1", "eu-central-1", "ap-southeast-1", "ap-northeast-1"],
+    "isActive": true
+  },
+  {
+    "code": "s3",
+    "name": "S3",
+    "fullName": "Simple Storage Service",
+    "description": "Object storage built to retrieve any amount of data from anywhere",
+    "category": "storage",
+    "icon": "storage",
+    "configSchema": {
+      "fields": [
+        {
+          "name": "region",
+          "type": "dropdown",
+          "label": "Region",
+          "required": true,
+          "options": "fetch_from_regions",
+          "default": "us-east-1"
+        },
+        {
+          "name": "storageClass",
+          "type": "dropdown",
+          "label": "Storage Class",
+          "required": true,
+          "options": ["standard", "intelligent-tiering", "standard-ia", "onezone-ia", "glacier-instant", "glacier-flexible", "glacier-deep"],
+          "default": "standard"
+        },
+        {
+          "name": "storageAmount",
+          "type": "number",
+          "label": "Storage Amount (GB)",
+          "required": true,
+          "default": 100,
+          "min": 0,
+          "helpText": "Total data stored in S3"
+        },
+        {
+          "name": "putRequests",
+          "type": "number",
+          "label": "PUT/COPY/POST Requests (per month)",
+          "required": false,
+          "default": 1000,
+          "min": 0
+        },
+        {
+          "name": "getRequests",
+          "type": "number",
+          "label": "GET/SELECT Requests (per month)",
+          "required": false,
+          "default": 10000,
+          "min": 0
+        },
+        {
+          "name": "dataTransferOut",
+          "type": "number",
+          "label": "Data Transfer Out (GB per month)",
+          "required": false,
+          "default": 0,
+          "min": 0
+        }
+      ]
+    },
+    "availableRegions": ["us-east-1", "us-east-2", "us-west-1", "us-west-2", "eu-west-1", "eu-central-1", "ap-southeast-1", "ap-northeast-1"],
+    "isActive": true
+  },
+  {
+    "code": "lambda",
+    "name": "Lambda",
+    "fullName": "AWS Lambda",
+    "description": "Run code without thinking about servers or clusters",
+    "category": "compute",
+    "icon": "compute",
+    "configSchema": {
+      "fields": [
+        {
+          "name": "region",
+          "type": "dropdown",
+          "label": "Region",
+          "required": true,
+          "options": "fetch_from_regions",
+          "default": "us-east-1"
+        },
+        {
+          "name": "architecture",
+          "type": "dropdown",
+          "label": "Architecture",
+          "required": true,
+          "options": ["x86_64", "arm64"],
+          "default": "x86_64",
+          "helpText": "ARM64 (Graviton2) is 20% cheaper"
+        },
+        {
+          "name": "memoryMB",
+          "type": "number",
+          "label": "Memory (MB)",
+          "required": true,
+          "default": 128,
+          "min": 128,
+          "max": 10240,
+          "helpText": "Memory allocation from 128 MB to 10,240 MB"
+        },
+        {
+          "name": "avgDurationMs",
+          "type": "number",
+          "label": "Average Duration (milliseconds)",
+          "required": true,
+          "default": 200,
+          "min": 1,
+          "helpText": "Average execution time per invocation"
+        },
+        {
+          "name": "requests",
+          "type": "number",
+          "label": "Requests per Month",
+          "required": true,
+          "default": 1000000,
+          "min": 0,
+          "helpText": "First 1 million requests per month are free"
+        }
+      ]
+    },
+    "availableRegions": ["us-east-1", "us-east-2", "us-west-1", "us-west-2", "eu-west-1", "eu-central-1", "ap-southeast-1", "ap-northeast-1"],
+    "isActive": true
+  },
+  {
+    "code": "rds",
+    "name": "RDS",
+    "fullName": "Relational Database Service",
+    "description": "Managed relational database service for MySQL, PostgreSQL, and more",
+    "category": "database",
+    "icon": "database",
+    "configSchema": {
+      "fields": [
+        {
+          "name": "region",
+          "type": "dropdown",
+          "label": "Region",
+          "required": true,
+          "options": "fetch_from_regions",
+          "default": "us-east-1"
+        },
+        {
+          "name": "engine",
+          "type": "dropdown",
+          "label": "Database Engine",
+          "required": true,
+          "options": ["MySQL", "PostgreSQL", "MariaDB", "Oracle", "SQL Server"],
+          "default": "MySQL"
+        },
+        {
+          "name": "instanceClass",
+          "type": "searchable-dropdown",
+          "label": "Instance Class",
+          "required": true,
+          "options": ["db.t3.micro", "db.t3.small", "db.t3.medium", "db.t3.large", "db.m5.large", "db.m5.xlarge", "db.r5.large", "db.r5.xlarge"],
+          "default": "db.t3.micro"
+        },
+        {
+          "name": "deployment",
+          "type": "dropdown",
+          "label": "Deployment",
+          "required": true,
+          "options": ["single-az", "multi-az"],
+          "default": "single-az",
+          "helpText": "Multi-AZ provides high availability"
+        },
+        {
+          "name": "pricingModel",
+          "type": "dropdown",
+          "label": "Pricing Model",
+          "required": true,
+          "options": ["On-Demand", "Reserved 1-year", "Reserved 3-year"],
+          "default": "On-Demand"
+        },
+        {
+          "name": "storageType",
+          "type": "dropdown",
+          "label": "Storage Type",
+          "required": true,
+          "options": ["gp2", "gp3", "io1"],
+          "default": "gp2"
+        },
+        {
+          "name": "storageAmount",
+          "type": "number",
+          "label": "Storage (GB)",
+          "required": true,
+          "default": 20,
+          "min": 20,
+          "max": 65536
+        },
+        {
+          "name": "usage",
+          "type": "number",
+          "label": "Usage (hours per month)",
+          "required": true,
+          "default": 730,
+          "min": 1,
+          "max": 730
+        }
+      ]
+    },
+    "availableRegions": ["us-east-1", "us-east-2", "us-west-1", "us-west-2", "eu-west-1", "eu-central-1", "ap-southeast-1", "ap-northeast-1"],
+    "isActive": true
+  }
+]
