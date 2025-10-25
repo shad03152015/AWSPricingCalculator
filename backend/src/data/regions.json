@@ -1,0 +1,21 @@
+[
+  { "code": "us-east-1", "name": "US East (N. Virginia)", "location": "Virginia, USA", "isActive": true },
+  { "code": "us-east-2", "name": "US East (Ohio)", "location": "Ohio, USA", "isActive": true },
+  { "code": "us-west-1", "name": "US West (N. California)", "location": "California, USA", "isActive": true },
+  { "code": "us-west-2", "name": "US West (Oregon)", "location": "Oregon, USA", "isActive": true },
+  { "code": "ca-central-1", "name": "Canada (Central)", "location": "Montreal, Canada", "isActive": true },
+  { "code": "eu-west-1", "name": "EU (Ireland)", "location": "Dublin, Ireland", "isActive": true },
+  { "code": "eu-west-2", "name": "EU (London)", "location": "London, UK", "isActive": true },
+  { "code": "eu-west-3", "name": "EU (Paris)", "location": "Paris, France", "isActive": true },
+  { "code": "eu-central-1", "name": "EU (Frankfurt)", "location": "Frankfurt, Germany", "isActive": true },
+  { "code": "eu-north-1", "name": "EU (Stockholm)", "location": "Stockholm, Sweden", "isActive": true },
+  { "code": "ap-south-1", "name": "Asia Pacific (Mumbai)", "location": "Mumbai, India", "isActive": true },
+  { "code": "ap-northeast-1", "name": "Asia Pacific (Tokyo)", "location": "Tokyo, Japan", "isActive": true },
+  { "code": "ap-northeast-2", "name": "Asia Pacific (Seoul)", "location": "Seoul, South Korea", "isActive": true },
+  { "code": "ap-northeast-3", "name": "Asia Pacific (Osaka)", "location": "Osaka, Japan", "isActive": true },
+  { "code": "ap-southeast-1", "name": "Asia Pacific (Singapore)", "location": "Singapore", "isActive": true },
+  { "code": "ap-southeast-2", "name": "Asia Pacific (Sydney)", "location": "Sydney, Australia", "isActive": true },
+  { "code": "sa-east-1", "name": "South America (São Paulo)", "location": "São Paulo, Brazil", "isActive": true },
+  { "code": "me-south-1", "name": "Middle East (Bahrain)", "location": "Bahrain", "isActive": true },
+  { "code": "af-south-1", "name": "Africa (Cape Town)", "location": "Cape Town, South Africa", "isActive": true }
+]
