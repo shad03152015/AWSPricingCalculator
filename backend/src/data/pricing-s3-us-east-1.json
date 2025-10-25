@@ -1,0 +1,59 @@
+{
+  "serviceCode": "s3",
+  "region": "us-east-1",
+  "pricingType": "storage",
+  "pricingData": {
+    "storageClasses": {
+      "standard": {
+        "tiers": [
+          { "upTo": 51200, "pricePerGB": 0.023 },
+          { "upTo": 512000, "pricePerGB": 0.022 },
+          { "upTo": Infinity, "pricePerGB": 0.021 }
+        ]
+      },
+      "intelligenttiering": {
+        "frequentAccess": 0.023,
+        "infrequentAccess": 0.0125,
+        "archiveInstant": 0.004,
+        "archiveAccess": 0.0036,
+        "deepArchive": 0.00099,
+        "monitoring": 0.0025
+      },
+      "standardia": {
+        "storage": 0.0125,
+        "retrieval": 0.01,
+        "minimumDays": 30,
+        "minimumSizeKB": 128
+      },
+      "onezoneia": {
+        "storage": 0.01,
+        "retrieval": 0.01,
+        "minimumDays": 30
+      },
+      "glacierinstant": {
+        "storage": 0.004,
+        "retrieval": 0.03,
+        "minimumDays": 90
+      },
+      "glacierflexible": {
+        "storage": 0.0036,
+        "retrievalExpedited": 0.03,
+        "retrievalStandard": 0.01,
+        "retrievalBulk": 0.0025,
+        "minimumDays": 90
+      },
+      "glacierdeep": {
+        "storage": 0.00099,
+        "retrievalStandard": 0.02,
+        "retrievalBulk": 0.0025,
+        "minimumDays": 180
+      }
+    },
+    "requests": {
+      "put": 0.005,
+      "get": 0.0004
+    }
+  },
+  "effectiveDate": "2025-01-01T00:00:00.000Z",
+  "version": 1
+}

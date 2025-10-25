@@ -1,0 +1,123 @@
+{
+  "serviceCode": "rds",
+  "region": "us-east-1",
+  "pricingType": "compute",
+  "pricingData": {
+    "instanceClasses": {
+      "db.t3.micro": {
+        "onDemand": 0.016,
+        "reserved1Year": {
+          "noUpfront": 0.011,
+          "partialUpfront": 0.010,
+          "allUpfront": 0.008
+        },
+        "reserved3Year": {
+          "noUpfront": 0.008,
+          "partialUpfront": 0.006,
+          "allUpfront": 0.005
+        }
+      },
+      "db.t3.small": {
+        "onDemand": 0.032,
+        "reserved1Year": {
+          "noUpfront": 0.022,
+          "partialUpfront": 0.019,
+          "allUpfront": 0.016
+        },
+        "reserved3Year": {
+          "noUpfront": 0.016,
+          "partialUpfront": 0.012,
+          "allUpfront": 0.010
+        }
+      },
+      "db.t3.medium": {
+        "onDemand": 0.064,
+        "reserved1Year": {
+          "noUpfront": 0.045,
+          "partialUpfront": 0.038,
+          "allUpfront": 0.032
+        },
+        "reserved3Year": {
+          "noUpfront": 0.032,
+          "partialUpfront": 0.025,
+          "allUpfront": 0.019
+        }
+      },
+      "db.t3.large": {
+        "onDemand": 0.128,
+        "reserved1Year": {
+          "noUpfront": 0.090,
+          "partialUpfront": 0.077,
+          "allUpfront": 0.064
+        },
+        "reserved3Year": {
+          "noUpfront": 0.064,
+          "partialUpfront": 0.051,
+          "allUpfront": 0.038
+        }
+      },
+      "db.m5.large": {
+        "onDemand": 0.170,
+        "reserved1Year": {
+          "noUpfront": 0.119,
+          "partialUpfront": 0.102,
+          "allUpfront": 0.085
+        },
+        "reserved3Year": {
+          "noUpfront": 0.085,
+          "partialUpfront": 0.068,
+          "allUpfront": 0.051
+        }
+      },
+      "db.m5.xlarge": {
+        "onDemand": 0.340,
+        "reserved1Year": {
+          "noUpfront": 0.238,
+          "partialUpfront": 0.204,
+          "allUpfront": 0.170
+        },
+        "reserved3Year": {
+          "noUpfront": 0.170,
+          "partialUpfront": 0.136,
+          "allUpfront": 0.102
+        }
+      },
+      "db.r5.large": {
+        "onDemand": 0.240,
+        "reserved1Year": {
+          "noUpfront": 0.168,
+          "partialUpfront": 0.144,
+          "allUpfront": 0.120
+        },
+        "reserved3Year": {
+          "noUpfront": 0.120,
+          "partialUpfront": 0.096,
+          "allUpfront": 0.072
+        }
+      },
+      "db.r5.xlarge": {
+        "onDemand": 0.480,
+        "reserved1Year": {
+          "noUpfront": 0.336,
+          "partialUpfront": 0.288,
+          "allUpfront": 0.240
+        },
+        "reserved3Year": {
+          "noUpfront": 0.240,
+          "partialUpfront": 0.192,
+          "allUpfront": 0.144
+        }
+      }
+    },
+    "storage": {
+      "gp2": 0.115,
+      "gp3": 0.115,
+      "gp3Iops": 0.02,
+      "io1Storage": 0.125,
+      "io1Iops": 0.10
+    },
+    "backupStorage": 0.095
+  },
+  "effectiveDate": "2025-01-01T00:00:00.000Z",
+  "version": 1
+}

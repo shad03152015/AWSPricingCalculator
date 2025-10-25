@@ -1,0 +1,17 @@
+{
+  "serviceCode": "lambda",
+  "region": "us-east-1",
+  "pricingType": "compute",
+  "pricingData": {
+    "requestPrice": 0.20,
+    "computeRateX86": 0.0000166667,
+    "computeRateArm": 0.0000133334,
+    "ephemeralStorageRate": 0.0000000309,
+    "freeTier": {
+      "requests": 1000000,
+      "gbSeconds": 400000
+    }
+  },
+  "effectiveDate": "2025-01-01T00:00:00.000Z",
+  "version": 1
+}
