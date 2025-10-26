@@ -178,46 +178,84 @@ function Calculator() {
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <Box display="flex" alignItems="center" gap={2}>
                     <Typography variant="h6">Compute Services</Typography>
-                    <Chip label="1 service" size="small" color="primary" />
+                    <Chip label="2 services" size="small" color="primary" />
                   </Box>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Paper
-                    variant="outlined"
-                    sx={{
-                      p: 2,
-                      cursor: 'pointer',
-                      '&:hover': {
-                        bgcolor: 'action.hover',
-                        borderColor: 'primary.main',
-                      },
-                      transition: 'all 0.2s',
-                    }}
-                    onClick={handleAddEC2}
-                  >
-                    <Box display="flex" justifyContent="space-between" alignItems="center">
-                      <Box>
-                        <Typography variant="h6" fontWeight="bold" gutterBottom>
-                          EC2 - Elastic Compute Cloud
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Virtual servers in the cloud with full Material UI implementation and
-                          Redis caching
-                        </Typography>
-                        <Box mt={1}>
-                          <Chip label="Compute" size="small" sx={{ mr: 1 }} />
-                          <Chip label="Phase 2 Complete" size="small" color="success" />
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <Paper
+                      variant="outlined"
+                      sx={{
+                        p: 2,
+                        cursor: 'pointer',
+                        '&:hover': {
+                          bgcolor: 'action.hover',
+                          borderColor: 'primary.main',
+                        },
+                        transition: 'all 0.2s',
+                      }}
+                      onClick={handleAddEC2}
+                    >
+                      <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Box>
+                          <Typography variant="h6" fontWeight="bold" gutterBottom>
+                            EC2 - Elastic Compute Cloud
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            Virtual servers in the cloud with flexible instance types
+                          </Typography>
+                          <Box mt={1}>
+                            <Chip label="Compute" size="small" sx={{ mr: 1 }} />
+                            <Chip label="Available" size="small" color="success" />
+                          </Box>
                         </Box>
+                        <Button
+                          variant="contained"
+                          startIcon={<AddCircleOutlineIcon />}
+                          onClick={handleAddEC2}
+                        >
+                          Add EC2
+                        </Button>
                       </Box>
-                      <Button
-                        variant="contained"
-                        startIcon={<AddCircleOutlineIcon />}
-                        onClick={handleAddEC2}
-                      >
-                        Add EC2
-                      </Button>
-                    </Box>
-                  </Paper>
+                    </Paper>
+
+                    <Paper
+                      variant="outlined"
+                      sx={{
+                        p: 2,
+                        cursor: 'pointer',
+                        '&:hover': {
+                          bgcolor: 'action.hover',
+                          borderColor: 'primary.main',
+                        },
+                        transition: 'all 0.2s',
+                      }}
+                      onClick={handleAddECS}
+                    >
+                      <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Box>
+                          <Typography variant="h6" fontWeight="bold" gutterBottom>
+                            ECS - Elastic Container Service
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            Run containerized applications with Fargate or EC2 launch types
+                          </Typography>
+                          <Box mt={1}>
+                            <Chip label="Containers" size="small" sx={{ mr: 1 }} />
+                            <Chip label="Available" size="small" color="success" />
+                          </Box>
+                        </Box>
+                        <Button
+                          variant="contained"
+                          color="info"
+                          startIcon={<AddCircleOutlineIcon />}
+                          onClick={handleAddECS}
+                        >
+                          Add ECS
+                        </Button>
+                      </Box>
+                    </Paper>
+                  </Box>
                 </AccordionDetails>
               </Accordion>
 
