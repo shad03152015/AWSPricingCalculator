@@ -312,6 +312,43 @@ function Calculator() {
                         </Button>
                       </Box>
                     </Paper>
+
+                    <Paper
+                      variant="outlined"
+                      sx={{
+                        p: 2,
+                        cursor: 'pointer',
+                        '&:hover': {
+                          bgcolor: 'action.hover',
+                          borderColor: 'primary.main',
+                        },
+                        transition: 'all 0.2s',
+                      }}
+                      onClick={handleAddEKS}
+                    >
+                      <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Box>
+                          <Typography variant="h6" fontWeight="bold" gutterBottom>
+                            EKS - Elastic Kubernetes Service
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            Managed Kubernetes clusters with EC2 or Fargate compute options
+                          </Typography>
+                          <Box mt={1}>
+                            <Chip label="Kubernetes" size="small" sx={{ mr: 1 }} />
+                            <Chip label="Available" size="small" color="success" />
+                          </Box>
+                        </Box>
+                        <Button
+                          variant="contained"
+                          color="error"
+                          startIcon={<AddCircleOutlineIcon />}
+                          onClick={handleAddEKS}
+                        >
+                          Add EKS
+                        </Button>
+                      </Box>
+                    </Paper>
                   </Box>
                 </AccordionDetails>
               </Accordion>
