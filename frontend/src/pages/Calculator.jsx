@@ -188,7 +188,7 @@ function Calculator() {
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <Box display="flex" alignItems="center" gap={2}>
                     <Typography variant="h6">Compute Services</Typography>
-                    <Chip label="2 services" size="small" color="primary" />
+                    <Chip label="3 services" size="small" color="primary" />
                   </Box>
                 </AccordionSummary>
                 <AccordionDetails>
