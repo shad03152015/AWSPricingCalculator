@@ -135,12 +135,36 @@ function Calculator() {
     setSaveDialogOpen(true);
   };
 
-  const handleSaveConfirm = () => {
-    // TODO: Implement save to backend
-    enqueueSnackbar('Estimate saved successfully!', { variant: 'success' });
-    setSaveDialogOpen(false);
-    setEstimateName('');
-    setEstimateDescription('');
+  const handleSaveConfirm = async () => {
+    try {
+      // Prepare estimate data
+      const estimateData = {
+        name: estimateName.trim(),
+        description: estimateDescription.trim() || undefined,
+        services: configuredServices
+          .filter((s) => s.data)
+          .map((s) => s.data),
+        totalMonthlyCost: calculatedTotal,
+      };
+
+      // Validate that we have services
+      if (estimateData.services.length === 0) {
+        enqueueSnackbar('Please configure at least one service before saving', { variant: 'warning' });
+        return;
+      }
+
+      // Dispatch create estimate action
+      await dispatch(createEstimate(estimateData)).unwrap();
+
+      // Success
+      enqueueSnackbar('Estimate saved successfully!', { variant: 'success' });
+      setSaveDialogOpen(false);
+      setEstimateName('');
+      setEstimateDescription('');
+    } catch (error) {
+      console.error('Save estimate error:', error);
+      enqueueSnackbar(error || 'Failed to save estimate', { variant: 'error' });
+    }
   };
 
   // Handle share estimate
