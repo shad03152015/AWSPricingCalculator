@@ -89,6 +89,13 @@ const EC2ConfigForm = ({ onRemove, onCostUpdate }) => {
   // State for cost calculation
   const [cost, setCost] = useState({ monthlyCost: 0, breakdown: {} });
 
+  // Use ref to store the latest onCostUpdate callback to avoid infinite loops
+  const onCostUpdateRef = useRef(onCostUpdate);
+
+  useEffect(() => {
+    onCostUpdateRef.current = onCostUpdate;
+  }, [onCostUpdate]);
+
   // Calculate cost whenever configuration changes
   useEffect(() => {
     if (config.instanceType) {
@@ -96,8 +103,8 @@ const EC2ConfigForm = ({ onRemove, onCostUpdate }) => {
       setCost(calculatedCost);
 
       // Notify parent component of cost update
-      if (onCostUpdate) {
-        onCostUpdate({
+      if (onCostUpdateRef.current) {
+        onCostUpdateRef.current({
           serviceCode: 'AmazonEC2',
           serviceName: 'EC2 (Elastic Compute Cloud)',
           region: config.region,
@@ -106,7 +113,7 @@ const EC2ConfigForm = ({ onRemove, onCostUpdate }) => {
         });
       }
     }
-  }, [config, onCostUpdate]);
+  }, [config]);
 
   // Handle configuration field changes
   const handleConfigChange = (field, value) => {
