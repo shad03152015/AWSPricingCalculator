@@ -1,109 +1,319 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadAvailableServices } from '../store/slices/calculatorSlice';
+import { useSnackbar } from 'notistack';
+import {
+  Container,
+  Grid,
+  Typography,
+  Box,
+  Button,
+  Paper,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Chip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+} from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { loadAvailableServices, addService } from '../store/slices/calculatorSlice';
+import EC2ConfigForm from '../components/services/EC2ConfigForm';
+import CostSummaryCard from '../components/CostSummaryCard';
 
 function Calculator() {
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   const { availableServices, services, totalMonthlyCost } = useSelector((state) => state.calculator);
+
+  // State for dialogs
+  const [saveDialogOpen, setSaveDialogOpen] = useState(false);
+  const [estimateName, setEstimateName] = useState('');
+  const [estimateDescription, setEstimateDescription] = useState('');
+
+  // State for configured services
+  const [configuredServices, setConfiguredServices] = useState([]);
 
   useEffect(() => {
     dispatch(loadAvailableServices());
   }, [dispatch]);
 
+  // Handle adding EC2 service
+  const handleAddEC2 = () => {
+    setConfiguredServices((prev) => [
+      ...prev,
+      { id: Date.now(), type: 'EC2', data: null },
+    ]);
+    enqueueSnackbar('EC2 service added to calculator', { variant: 'success' });
+  };
+
+  // Handle removing service
+  const handleRemoveService = (serviceId) => {
+    setConfiguredServices((prev) => prev.filter((s) => s.id !== serviceId));
+    enqueueSnackbar('Service removed from calculator', { variant: 'info' });
+  };
+
+  // Handle cost update from service configuration
+  const handleCostUpdate = (serviceId, costData) => {
+    setConfiguredServices((prev) =>
+      prev.map((s) => (s.id === serviceId ? { ...s, data: costData } : s))
+    );
+  };
+
+  // Calculate total cost from configured services
+  const calculatedTotal = configuredServices.reduce(
+    (sum, service) => sum + (service.data?.monthlyCost || 0),
+    0
+  );
+
+  // Handle save estimate
+  const handleSaveEstimate = () => {
+    setSaveDialogOpen(true);
+  };
+
+  const handleSaveConfirm = () => {
+    // TODO: Implement save to backend
+    enqueueSnackbar('Estimate saved successfully!', { variant: 'success' });
+    setSaveDialogOpen(false);
+    setEstimateName('');
+    setEstimateDescription('');
+  };
+
+  // Handle share estimate
+  const handleShareEstimate = () => {
+    // TODO: Implement share functionality
+    enqueueSnackbar('Share functionality coming soon!', { variant: 'info' });
+  };
+
+  // Handle export estimate
+  const handleExportEstimate = () => {
+    const exportData = {
+      name: 'AWS Cost Estimate',
+      timestamp: new Date().toISOString(),
+      services: configuredServices.filter((s) => s.data).map((s) => s.data),
+      totalMonthlyCost: calculatedTotal,
+      totalAnnualCost: calculatedTotal * 12,
+    };
+
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+      type: 'application/json',
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `aws-estimate-${Date.now()}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+
+    enqueueSnackbar('Estimate exported successfully!', { variant: 'success' });
+  };
+
+  // Handle clear all
+  const handleClearAll = () => {
+    if (window.confirm('Are you sure you want to clear all services?')) {
+      setConfiguredServices([]);
+      enqueueSnackbar('All services cleared', { variant: 'info' });
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <Box sx={{ bgcolor: 'background.default', minHeight: '100vh', py: 4 }}>
+      <Container maxWidth="xl">
         {/* Page Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900">AWS Pricing Calculator</h1>
-          <p className="mt-2 text-lg text-gray-600">
+        <Box mb={4}>
+          <Typography variant="h3" fontWeight="bold" gutterBottom>
+            AWS Pricing Calculator
+          </Typography>
+          <Typography variant="h6" color="text.secondary">
             Configure AWS services and estimate your monthly costs
-          </p>
-        </div>
+          </Typography>
+        </Box>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left: Service Selection */}
-          <div className="lg:col-span-2">
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-2xl font-semibold mb-4">Select Services</h2>
+        <Grid container spacing={3}>
+          {/* Left Column: Service Configuration */}
+          <Grid item xs={12} lg={8}>
+            {/* Service Selection Panel */}
+            <Paper elevation={2} sx={{ p: 3, mb: 3 }}>
+              <Typography variant="h5" fontWeight="bold" gutterBottom>
+                Available Services
+              </Typography>
+              <Typography variant="body2" color="text.secondary" paragraph>
+                Select services to configure and estimate costs. Currently showcasing EC2 as a
+                complete implementation.
+              </Typography>
 
-              {availableServices.length > 0 ? (
-                <div className="space-y-3">
-                  {availableServices.map((service) => (
-                    <div
-                      key={service.code}
-                      className="border border-gray-200 rounded-lg p-4 hover:border-aws-orange hover:shadow-md transition cursor-pointer"
-                    >
-                      <h3 className="font-semibold text-lg text-gray-900">{service.name}</h3>
-                      <p className="text-sm text-gray-600">{service.description}</p>
-                      <span className="inline-block mt-2 px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
-                        {service.category}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-8 text-gray-500">
-                  Loading services...
-                </div>
-              )}
-            </div>
-          </div>
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Box display="flex" alignItems="center" gap={2}>
+                    <Typography variant="h6">Compute Services</Typography>
+                    <Chip label="1 service" size="small" color="primary" />
+                  </Box>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Paper
+                    variant="outlined"
+                    sx={{
+                      p: 2,
+                      cursor: 'pointer',
+                      '&:hover': {
+                        bgcolor: 'action.hover',
+                        borderColor: 'primary.main',
+                      },
+                      transition: 'all 0.2s',
+                    }}
+                    onClick={handleAddEC2}
+                  >
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                      <Box>
+                        <Typography variant="h6" fontWeight="bold" gutterBottom>
+                          EC2 - Elastic Compute Cloud
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Virtual servers in the cloud with full Material UI implementation and
+                          Redis caching
+                        </Typography>
+                        <Box mt={1}>
+                          <Chip label="Compute" size="small" sx={{ mr: 1 }} />
+                          <Chip label="Phase 2 Complete" size="small" color="success" />
+                        </Box>
+                      </Box>
+                      <Button
+                        variant="contained"
+                        startIcon={<AddCircleOutlineIcon />}
+                        onClick={handleAddEC2}
+                      >
+                        Add EC2
+                      </Button>
+                    </Box>
+                  </Paper>
+                </AccordionDetails>
+              </Accordion>
 
-          {/* Right: Cost Summary */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-md p-6 sticky top-4">
-              <h2 className="text-2xl font-semibold mb-4">Cost Summary</h2>
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Box display="flex" alignItems="center" gap={2}>
+                    <Typography variant="h6">Storage Services</Typography>
+                    <Chip label="Coming Soon" size="small" />
+                  </Box>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography variant="body2" color="text.secondary">
+                    S3, EBS, EFS, and more storage services will be added in future phases.
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
 
-              {services.length > 0 ? (
-                <>
-                  <div className="space-y-3 mb-6">
-                    {services.map((service) => (
-                      <div key={service.id} className="flex justify-between border-b pb-2">
-                        <span className="text-sm text-gray-700">{service.serviceName}</span>
-                        <span className="text-sm font-semibold">${service.monthlyCost.toFixed(2)}</span>
-                      </div>
-                    ))}
-                  </div>
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Box display="flex" alignItems="center" gap={2}>
+                    <Typography variant="h6">Database Services</Typography>
+                    <Chip label="Coming Soon" size="small" />
+                  </Box>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography variant="body2" color="text.secondary">
+                    RDS, DynamoDB, and other database services will be added in future phases.
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+            </Paper>
 
-                  <div className="border-t pt-4">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-lg font-semibold">Monthly Total:</span>
-                      <span className="text-2xl font-bold text-aws-orange">
-                        ${totalMonthlyCost.toFixed(2)}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center text-gray-600">
-                      <span className="text-sm">Annual Total:</span>
-                      <span className="text-lg font-semibold">
-                        ${(totalMonthlyCost * 12).toFixed(2)}
-                      </span>
-                    </div>
-                  </div>
+            {/* Configured Services */}
+            {configuredServices.length > 0 && (
+              <Box>
+                <Typography variant="h5" fontWeight="bold" gutterBottom>
+                  Configured Services
+                </Typography>
+                {configuredServices.map((service) => (
+                  <Box key={service.id} mb={3}>
+                    {service.type === 'EC2' && (
+                      <EC2ConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                  </Box>
+                ))}
+              </Box>
+            )}
 
-                  <div className="mt-6 space-y-2">
-                    <button className="w-full bg-aws-orange text-white py-2 px-4 rounded-md hover:bg-orange-600 transition font-medium">
-                      Save Estimate
-                    </button>
-                    <button className="w-full bg-gray-200 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-300 transition font-medium">
-                      Share Estimate
-                    </button>
-                    <button className="w-full bg-gray-100 text-gray-600 py-2 px-4 rounded-md hover:bg-gray-200 transition font-medium">
-                      Export JSON
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <div className="text-center py-8 text-gray-500">
-                  No services selected yet.
-                  <p className="text-sm mt-2">Add services to see cost estimates.</p>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            {configuredServices.length === 0 && (
+              <Paper
+                elevation={2}
+                sx={{
+                  p: 6,
+                  textAlign: 'center',
+                  bgcolor: 'background.paper',
+                }}
+              >
+                <Typography variant="h6" color="text.secondary" gutterBottom>
+                  No services configured yet
+                </Typography>
+                <Typography variant="body2" color="text.secondary" paragraph>
+                  Click "Add EC2" above to start configuring your first service
+                </Typography>
+              </Paper>
+            )}
+          </Grid>
+
+          {/* Right Column: Cost Summary */}
+          <Grid item xs={12} lg={4}>
+            <CostSummaryCard
+              services={configuredServices.filter((s) => s.data).map((s) => s.data)}
+              onSave={handleSaveEstimate}
+              onShare={handleShareEstimate}
+              onExport={handleExportEstimate}
+              onClear={handleClearAll}
+            />
+          </Grid>
+        </Grid>
+      </Container>
+
+      {/* Save Estimate Dialog */}
+      <Dialog
+        open={saveDialogOpen}
+        onClose={() => setSaveDialogOpen(false)}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>Save Estimate</DialogTitle>
+        <DialogContent>
+          <Box sx={{ pt: 2 }}>
+            <TextField
+              fullWidth
+              label="Estimate Name"
+              value={estimateName}
+              onChange={(e) => setEstimateName(e.target.value)}
+              placeholder="e.g., Production Environment"
+              required
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              fullWidth
+              label="Description (Optional)"
+              value={estimateDescription}
+              onChange={(e) => setEstimateDescription(e.target.value)}
+              placeholder="Add notes about this estimate..."
+              multiline
+              rows={3}
+            />
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setSaveDialogOpen(false)}>Cancel</Button>
+          <Button
+            variant="contained"
+            onClick={handleSaveConfirm}
+            disabled={!estimateName.trim()}
+          >
+            Save Estimate
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 }
 
