@@ -17,13 +17,9 @@ import {
 
 function Estimate() {
   const dispatch = useDispatch();
-<<<<<<< HEAD
-  const { list, isLoading, error } = useSelector((state) => state.estimates);
-=======
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
-  const { list, isLoading } = useSelector((state) => state.estimates);
->>>>>>> b8e17bb (Auto-commit: Agent tool execution)
+  const { list, isLoading, error } = useSelector((state) => state.estimates);
 
   // View dialog state
   const [viewDialogOpen, setViewDialogOpen] = useState(false);
