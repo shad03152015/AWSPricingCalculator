@@ -309,27 +309,258 @@ const EC2ConfigForm = ({ onRemove, onCostUpdate }) => {
               </FormControl>
             </Grid>
 
-            {/* Pricing Model */}
-            <Grid item xs={12} md={6}>
-              <FormControl fullWidth>
-                <InputLabel>Pricing Model</InputLabel>
-                <Select
-                  value={config.pricingModel}
-                  label="Pricing Model"
-                  onChange={(e) => handleConfigChange('pricingModel', e.target.value)}
-                >
-                  {PRICING_MODELS.map((model) => (
-                    <MenuItem key={model.value} value={model.value}>
-                      <Box>
-                        <Typography variant="body2">{model.label}</Typography>
-                        <Typography variant="caption" color="text.secondary">
-                          {model.description}
+            {/* Payment Options - Card Based Layout */}
+            <Grid item xs={12}>
+              <Typography variant="h6" gutterBottom sx={{ mt: 2, mb: 1 }}>
+                Payment options
+              </Typography>
+              <Typography variant="body2" color="text.secondary" gutterBottom>
+                Estimated commitment price based on the following selections:
+              </Typography>
+              <Typography variant="body2" gutterBottom sx={{ mb: 2 }}>
+                Instance type: <strong>{selectedInstance?.type || 't4g.nano'}</strong> Operating system: <strong>{config.operatingSystem}</strong>
+              </Typography>
+
+              <Typography variant="body2" color="text.secondary" gutterBottom sx={{ mb: 2 }}>
+                Select the container and options to find your best price
+              </Typography>
+
+              <Grid container spacing={2}>
+                {/* Compute Savings Plans */}
+                <Grid item xs={12} md={6} lg={3}>
+                  <Card
+                    variant="outlined"
+                    sx={{
+                      height: '100%',
+                      border: config.pricingModel === 'Compute-Savings' ? 2 : 1,
+                      borderColor: config.pricingModel === 'Compute-Savings' ? 'primary.main' : 'divider',
+                      cursor: 'pointer'
+                    }}
+                    onClick={() => handleConfigChange('pricingModel', 'Compute-Savings')}
+                  >
+                    <CardContent>
+                      <FormControlLabel
+                        value="Compute-Savings"
+                        control={
+                          <Radio
+                            checked={config.pricingModel === 'Compute-Savings'}
+                            onChange={() => handleConfigChange('pricingModel', 'Compute-Savings')}
+                          />
+                        }
+                        label={
+                          <Typography variant="subtitle2" fontWeight="bold">
+                            Compute Savings Plans
+                          </Typography>
+                        }
+                        sx={{ mb: 1 }}
+                      />
+                      <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 2, ml: 4 }}>
+                        One plan automatically applies to all usage on EC2, Fargate, and Lambda. Up to 68% discount. <Link href="#" underline="hover">Learn more</Link>
+                      </Typography>
+
+                      <Typography variant="caption" fontWeight="bold" display="block" sx={{ ml: 4, mb: 1 }}>
+                        Reservation term
+                      </Typography>
+                      <RadioGroup value="3" sx={{ ml: 4 }}>
+                        <FormControlLabel value="1" control={<Radio size="small" />} label={<Typography variant="caption">1 year</Typography>} />
+                        <FormControlLabel value="3" control={<Radio size="small" />} label={<Typography variant="caption">3 year</Typography>} />
+                      </RadioGroup>
+
+                      <Typography variant="caption" fontWeight="bold" display="block" sx={{ ml: 4, mb: 1, mt: 2 }}>
+                        Payment Options
+                      </Typography>
+                      <RadioGroup value="No upfront" sx={{ ml: 4 }}>
+                        <FormControlLabel value="No upfront" control={<Radio size="small" />} label={<Typography variant="caption">No upfront</Typography>} />
+                        <FormControlLabel value="Partial upfront" control={<Radio size="small" />} label={<Typography variant="caption">Partial upfront</Typography>} />
+                        <FormControlLabel value="All upfront" control={<Radio size="small" />} label={<Typography variant="caption">All upfront</Typography>} />
+                      </RadioGroup>
+                    </CardContent>
+                  </Card>
+                </Grid>
+
+                {/* EC2 Instance Savings Plans */}
+                <Grid item xs={12} md={6} lg={3}>
+                  <Card
+                    variant="outlined"
+                    sx={{
+                      height: '100%',
+                      border: config.pricingModel === 'EC2-Savings' ? 2 : 1,
+                      borderColor: config.pricingModel === 'EC2-Savings' ? 'primary.main' : 'divider',
+                      cursor: 'pointer'
+                    }}
+                    onClick={() => handleConfigChange('pricingModel', 'EC2-Savings')}
+                  >
+                    <CardContent>
+                      <FormControlLabel
+                        value="EC2-Savings"
+                        control={
+                          <Radio
+                            checked={config.pricingModel === 'EC2-Savings'}
+                            onChange={() => handleConfigChange('pricingModel', 'EC2-Savings')}
+                          />
+                        }
+                        label={
+                          <Typography variant="subtitle2" fontWeight="bold">
+                            EC2 Instance Savings Plans
+                          </Typography>
+                        }
+                        sx={{ mb: 1 }}
+                      />
+                      <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 2, ml: 4 }}>
+                        Get savings when you only need one instance family and region. Up to 72% discount. <Link href="#" underline="hover">Learn more</Link>
+                      </Typography>
+
+                      <Typography variant="caption" fontWeight="bold" display="block" sx={{ ml: 4, mb: 1 }}>
+                        Reservation term
+                      </Typography>
+                      <RadioGroup value="1" sx={{ ml: 4 }}>
+                        <FormControlLabel value="1" control={<Radio size="small" />} label={<Typography variant="caption">1 year</Typography>} />
+                        <FormControlLabel value="3" control={<Radio size="small" />} label={<Typography variant="caption">3 year</Typography>} />
+                      </RadioGroup>
+
+                      <Typography variant="caption" fontWeight="bold" display="block" sx={{ ml: 4, mb: 1, mt: 2 }}>
+                        Payment Options
+                      </Typography>
+                      <RadioGroup value="No upfront" sx={{ ml: 4 }}>
+                        <FormControlLabel value="No upfront" control={<Radio size="small" />} label={<Typography variant="caption">No upfront</Typography>} />
+                        <FormControlLabel value="Partial upfront" control={<Radio size="small" />} label={<Typography variant="caption">Partial upfront</Typography>} />
+                        <FormControlLabel value="All upfront" control={<Radio size="small" />} label={<Typography variant="caption">All upfront</Typography>} />
+                      </RadioGroup>
+                    </CardContent>
+                  </Card>
+                </Grid>
+
+                {/* On-Demand */}
+                <Grid item xs={12} md={6} lg={3}>
+                  <Card
+                    variant="outlined"
+                    sx={{
+                      height: '100%',
+                      border: config.pricingModel === 'On-Demand' ? 2 : 1,
+                      borderColor: config.pricingModel === 'On-Demand' ? 'primary.main' : 'divider',
+                      cursor: 'pointer'
+                    }}
+                    onClick={() => handleConfigChange('pricingModel', 'On-Demand')}
+                  >
+                    <CardContent>
+                      <FormControlLabel
+                        value="On-Demand"
+                        control={
+                          <Radio
+                            checked={config.pricingModel === 'On-Demand'}
+                            onChange={() => handleConfigChange('pricingModel', 'On-Demand')}
+                          />
+                        }
+                        label={
+                          <Typography variant="subtitle2" fontWeight="bold">
+                            On-Demand
+                          </Typography>
+                        }
+                        sx={{ mb: 1 }}
+                      />
+                      <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 2, ml: 4 }}>
+                        No flexibility, no discounts. <Link href="#" underline="hover">Learn more</Link>
+                      </Typography>
+
+                      <Typography variant="caption" fontWeight="bold" display="block" sx={{ ml: 4, mb: 1 }}>
+                        Expected utilization
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary" display="block" sx={{ ml: 4, mb: 1 }}>
+                        Enter the expected usage of Amazon EC2 instances
+                      </Typography>
+
+                      <Typography variant="caption" fontWeight="bold" display="block" sx={{ ml: 4, mb: 0.5 }}>
+                        Usage
+                      </Typography>
+                      <TextField
+                        size="small"
+                        value={config.hoursPerMonth}
+                        onChange={(e) => handleConfigChange('hoursPerMonth', parseInt(e.target.value) || 0)}
+                        sx={{ ml: 4, width: '120px' }}
+                      />
+
+                      <FormControl size="small" sx={{ ml: 4, mt: 1, minWidth: 200 }}>
+                        <Select
+                          value="percent"
+                          displayEmpty
+                        >
+                          <MenuItem value="percent">Utilization percent per month</MenuItem>
+                          <MenuItem value="hours">Hours per month</MenuItem>
+                        </Select>
+                      </FormControl>
+
+                      <Box sx={{ ml: 4, mt: 2, p: 1.5, bgcolor: 'info.light', borderRadius: 1 }}>
+                        <Box display="flex" alignItems="flex-start" gap={1}>
+                          <InfoIcon fontSize="small" color="info" />
+                          <Typography variant="caption" color="text.secondary">
+                            Note that for usage less than 100%, the calculator assumes that the attached EBS volume is deleted while the instance is not running. Keep in mind that volumes are billed as long as they are provisioned in your account, even while attached to a stopped instance.
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </CardContent>
+                  </Card>
+                </Grid>
+
+                {/* Spot Instances */}
+                <Grid item xs={12} md={6} lg={3}>
+                  <Card
+                    variant="outlined"
+                    sx={{
+                      height: '100%',
+                      border: config.pricingModel === 'Spot' ? 2 : 1,
+                      borderColor: config.pricingModel === 'Spot' ? 'primary.main' : 'divider',
+                      cursor: 'pointer'
+                    }}
+                    onClick={() => handleConfigChange('pricingModel', 'Spot')}
+                  >
+                    <CardContent>
+                      <FormControlLabel
+                        value="Spot"
+                        control={
+                          <Radio
+                            checked={config.pricingModel === 'Spot'}
+                            onChange={() => handleConfigChange('pricingModel', 'Spot')}
+                          />
+                        }
+                        label={
+                          <Typography variant="subtitle2" fontWeight="bold">
+                            Spot Instances
+                          </Typography>
+                        }
+                        sx={{ mb: 1 }}
+                      />
+                      <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 2, ml: 4 }}>
+                        Minimize cost by leveraging EC2's spare capacity. Recommended for fault tolerant and interruption tolerant applications. <Link href="#" underline="hover">Learn more</Link>
+                      </Typography>
+
+                      <Typography variant="body2" sx={{ ml: 4, mt: 2 }}>
+                        The historical average discount for t4g.nano is <strong>48%</strong>
+                      </Typography>
+
+                      <Typography variant="caption" fontWeight="bold" display="block" sx={{ ml: 4, mb: 0.5, mt: 2 }}>
+                        Assume percentage discount for my estimate
+                      </Typography>
+                      <TextField
+                        size="small"
+                        value="48"
+                        sx={{ ml: 4, width: '120px' }}
+                      />
+
+                      <Box sx={{ ml: 4, mt: 2, p: 1.5, bgcolor: 'info.light', borderRadius: 1 }}>
+                        <Box display="flex" alignItems="flex-start" gap={1}>
+                          <InfoIcon fontSize="small" color="info" />
+                          <Typography variant="caption" fontWeight="bold">
+                            Actual spot instance pricing varies
+                          </Typography>
+                        </Box>
+                        <Typography variant="caption" color="text.secondary" display="block">
+                          With spot instances, you pay the spot price that's in effect for the time period your instance is running
                         </Typography>
                       </Box>
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </Grid>
             </Grid>
 
             {/* Tenancy */}
