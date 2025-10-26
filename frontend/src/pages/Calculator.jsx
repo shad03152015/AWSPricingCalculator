@@ -206,13 +206,46 @@ function Calculator() {
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <Box display="flex" alignItems="center" gap={2}>
                     <Typography variant="h6">Storage Services</Typography>
-                    <Chip label="Coming Soon" size="small" />
+                    <Chip label="1 service" size="small" color="primary" />
                   </Box>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Typography variant="body2" color="text.secondary">
-                    S3, EBS, EFS, and more storage services will be added in future phases.
-                  </Typography>
+                  <Paper
+                    variant="outlined"
+                    sx={{
+                      p: 2,
+                      cursor: 'pointer',
+                      '&:hover': {
+                        bgcolor: 'action.hover',
+                        borderColor: 'primary.main',
+                      },
+                      transition: 'all 0.2s',
+                    }}
+                    onClick={handleAddS3}
+                  >
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                      <Box>
+                        <Typography variant="h6" fontWeight="bold" gutterBottom>
+                          S3 - Simple Storage Service
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Object storage service with multiple storage classes for cost optimization
+                        </Typography>
+                        <Box mt={1}>
+                          <Chip label="Storage" size="small" sx={{ mr: 1 }} />
+                          <Chip label="Available" size="small" color="success" />
+                        </Box>
+                      </Box>
+                      <Button
+                        variant="contained"
+                        color="success"
+                        startIcon={<AddCircleOutlineIcon />}
+                        onClick={handleAddS3}
+                      >
+                        Add S3
+                      </Button>
+                    </Box>
+                  </Paper>
                 </AccordionDetails>
               </Accordion>
 
