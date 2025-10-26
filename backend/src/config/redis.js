@@ -56,7 +56,7 @@ export function generateCacheKey(prefix, ...parts) {
 /**
  * Hash object to create consistent cache keys
  */
-export function hashConfig(config) {
+export async function hashConfig(config) {
   const crypto = await import('crypto');
   const hash = crypto.createHash('md5');
   hash.update(JSON.stringify(config));
