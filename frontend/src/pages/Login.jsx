@@ -14,7 +14,7 @@ function Login() {
   const location = useLocation();
   const { isLoading, error, isAuthenticated } = useSelector((state) => state.auth);
 
-  const from = location.state?.from?.pathname || '/calculator';
+  const from = location.state?.from?.pathname || '/dashboard';
 
   useEffect(() => {
     if (isAuthenticated) {
