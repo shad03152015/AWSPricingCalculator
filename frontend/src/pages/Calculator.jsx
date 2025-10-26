@@ -265,6 +265,43 @@ function Calculator() {
                         </Button>
                       </Box>
                     </Paper>
+
+                    <Paper
+                      variant="outlined"
+                      sx={{
+                        p: 2,
+                        cursor: 'pointer',
+                        '&:hover': {
+                          bgcolor: 'action.hover',
+                          borderColor: 'primary.main',
+                        },
+                        transition: 'all 0.2s',
+                      }}
+                      onClick={handleAddLambda}
+                    >
+                      <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Box>
+                          <Typography variant="h6" fontWeight="bold" gutterBottom>
+                            Lambda - Serverless Functions
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            Run code without provisioning servers - pay only for compute time used
+                          </Typography>
+                          <Box mt={1}>
+                            <Chip label="Serverless" size="small" sx={{ mr: 1 }} />
+                            <Chip label="Available" size="small" color="success" />
+                          </Box>
+                        </Box>
+                        <Button
+                          variant="contained"
+                          color="warning"
+                          startIcon={<AddCircleOutlineIcon />}
+                          onClick={handleAddLambda}
+                        >
+                          Add Lambda
+                        </Button>
+                      </Box>
+                    </Paper>
                   </Box>
                 </AccordionDetails>
               </Accordion>
