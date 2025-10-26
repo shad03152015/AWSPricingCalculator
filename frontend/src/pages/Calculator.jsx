@@ -457,7 +457,7 @@ function Calculator() {
                   No services configured yet
                 </Typography>
                 <Typography variant="body2" color="text.secondary" paragraph>
-                  Click "Add EC2", "Add ECS", "Add S3", or "Add RDS" above to start configuring your first service
+                  Click "Add EC2", "Add ECS", "Add Lambda", "Add S3", or "Add RDS" above to start configuring your first service
                 </Typography>
               </Paper>
             )}
