@@ -56,6 +56,13 @@ const RDSConfigForm = ({ onRemove, onCostUpdate }) => {
   // State for cost calculation
   const [cost, setCost] = useState({ monthlyCost: 0, breakdown: {} });
 
+  // Use ref to store the latest onCostUpdate callback to avoid infinite loops
+  const onCostUpdateRef = useRef(onCostUpdate);
+
+  useEffect(() => {
+    onCostUpdateRef.current = onCostUpdate;
+  }, [onCostUpdate]);
+
   // Get engine details
   const selectedEngine = getDatabaseEngineDetails(config.engine);
   const isAurora = selectedEngine?.isAurora || false;
@@ -70,8 +77,8 @@ const RDSConfigForm = ({ onRemove, onCostUpdate }) => {
       setCost(calculatedCost);
 
       // Notify parent component of cost update
-      if (onCostUpdate) {
-        onCostUpdate({
+      if (onCostUpdateRef.current) {
+        onCostUpdateRef.current({
           serviceCode: 'AmazonRDS',
           serviceName: 'RDS (Relational Database Service)',
           region: config.region,
@@ -80,7 +87,7 @@ const RDSConfigForm = ({ onRemove, onCostUpdate }) => {
         });
       }
     }
-  }, [config, onCostUpdate, isAurora]);
+  }, [config, isAurora]);
 
   // Handle configuration field changes
   const handleConfigChange = (field, value) => {
