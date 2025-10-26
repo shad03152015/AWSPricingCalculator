@@ -31,6 +31,7 @@ import {
   EBS_VOLUME_TYPES,
   TENANCY_OPTIONS,
   getAllInstanceTypes,
+  getVCPUOptions,
   calculateEC2Cost,
 } from '../../data/ec2Data';
 
@@ -54,7 +55,16 @@ const AWS_REGIONS = [
 ];
 
 const EC2ConfigForm = ({ onRemove, onCostUpdate }) => {
-  const instanceTypes = getAllInstanceTypes();
+  const allInstanceTypes = getAllInstanceTypes();
+  const vcpuOptions = getVCPUOptions();
+
+  // State for filters
+  const [vcpuFilter, setVcpuFilter] = useState('');
+
+  // Filter instance types based on vCPU selection
+  const instanceTypes = vcpuFilter
+    ? allInstanceTypes.filter(inst => inst.vcpu === parseInt(vcpuFilter))
+    : allInstanceTypes;
 
   // State for configuration
   const [config, setConfig] = useState({
