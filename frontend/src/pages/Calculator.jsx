@@ -22,6 +22,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { loadAvailableServices, addService } from '../store/slices/calculatorSlice';
 import EC2ConfigForm from '../components/services/EC2ConfigForm';
+import S3ConfigForm from '../components/services/S3ConfigForm';
+import RDSConfigForm from '../components/services/RDSConfigForm';
+import ECSConfigForm from '../components/services/ECSConfigForm';
+import LambdaConfigForm from '../components/services/LambdaConfigForm';
 import CostSummaryCard from '../components/CostSummaryCard';
 
 function Calculator() {
@@ -48,6 +52,42 @@ function Calculator() {
       { id: Date.now(), type: 'EC2', data: null },
     ]);
     enqueueSnackbar('EC2 service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding S3 service
+  const handleAddS3 = () => {
+    setConfiguredServices((prev) => [
+      ...prev,
+      { id: Date.now(), type: 'S3', data: null },
+    ]);
+    enqueueSnackbar('S3 service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding RDS service
+  const handleAddRDS = () => {
+    setConfiguredServices((prev) => [
+      ...prev,
+      { id: Date.now(), type: 'RDS', data: null },
+    ]);
+    enqueueSnackbar('RDS service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding ECS service
+  const handleAddECS = () => {
+    setConfiguredServices((prev) => [
+      ...prev,
+      { id: Date.now(), type: 'ECS', data: null },
+    ]);
+    enqueueSnackbar('ECS service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding Lambda service
+  const handleAddLambda = () => {
+    setConfiguredServices((prev) => [
+      ...prev,
+      { id: Date.now(), type: 'Lambda', data: null },
+    ]);
+    enqueueSnackbar('Lambda service added to calculator', { variant: 'success' });
   };
 
   // Handle removing service
@@ -141,14 +181,135 @@ function Calculator() {
                 Available Services
               </Typography>
               <Typography variant="body2" color="text.secondary" paragraph>
-                Select services to configure and estimate costs. Currently showcasing EC2 as a
-                complete implementation.
+                Select services to configure and estimate costs. Currently available: EC2, ECS, Lambda (Compute), S3 (Storage), and RDS (Database).
               </Typography>
 
               <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <Box display="flex" alignItems="center" gap={2}>
                     <Typography variant="h6">Compute Services</Typography>
+                    <Chip label="3 services" size="small" color="primary" />
+                  </Box>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <Paper
+                      variant="outlined"
+                      sx={{
+                        p: 2,
+                        cursor: 'pointer',
+                        '&:hover': {
+                          bgcolor: 'action.hover',
+                          borderColor: 'primary.main',
+                        },
+                        transition: 'all 0.2s',
+                      }}
+                      onClick={handleAddEC2}
+                    >
+                      <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Box>
+                          <Typography variant="h6" fontWeight="bold" gutterBottom>
+                            EC2 - Elastic Compute Cloud
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            Virtual servers in the cloud with flexible instance types
+                          </Typography>
+                          <Box mt={1}>
+                            <Chip label="Compute" size="small" sx={{ mr: 1 }} />
+                            <Chip label="Available" size="small" color="success" />
+                          </Box>
+                        </Box>
+                        <Button
+                          variant="contained"
+                          startIcon={<AddCircleOutlineIcon />}
+                          onClick={handleAddEC2}
+                        >
+                          Add EC2
+                        </Button>
+                      </Box>
+                    </Paper>
+
+                    <Paper
+                      variant="outlined"
+                      sx={{
+                        p: 2,
+                        cursor: 'pointer',
+                        '&:hover': {
+                          bgcolor: 'action.hover',
+                          borderColor: 'primary.main',
+                        },
+                        transition: 'all 0.2s',
+                      }}
+                      onClick={handleAddECS}
+                    >
+                      <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Box>
+                          <Typography variant="h6" fontWeight="bold" gutterBottom>
+                            ECS - Elastic Container Service
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            Run containerized applications with Fargate or EC2 launch types
+                          </Typography>
+                          <Box mt={1}>
+                            <Chip label="Containers" size="small" sx={{ mr: 1 }} />
+                            <Chip label="Available" size="small" color="success" />
+                          </Box>
+                        </Box>
+                        <Button
+                          variant="contained"
+                          color="info"
+                          startIcon={<AddCircleOutlineIcon />}
+                          onClick={handleAddECS}
+                        >
+                          Add ECS
+                        </Button>
+                      </Box>
+                    </Paper>
+
+                    <Paper
+                      variant="outlined"
+                      sx={{
+                        p: 2,
+                        cursor: 'pointer',
+                        '&:hover': {
+                          bgcolor: 'action.hover',
+                          borderColor: 'primary.main',
+                        },
+                        transition: 'all 0.2s',
+                      }}
+                      onClick={handleAddLambda}
+                    >
+                      <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Box>
+                          <Typography variant="h6" fontWeight="bold" gutterBottom>
+                            Lambda - Serverless Functions
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            Run code without provisioning servers - pay only for compute time used
+                          </Typography>
+                          <Box mt={1}>
+                            <Chip label="Serverless" size="small" sx={{ mr: 1 }} />
+                            <Chip label="Available" size="small" color="success" />
+                          </Box>
+                        </Box>
+                        <Button
+                          variant="contained"
+                          color="warning"
+                          startIcon={<AddCircleOutlineIcon />}
+                          onClick={handleAddLambda}
+                        >
+                          Add Lambda
+                        </Button>
+                      </Box>
+                    </Paper>
+                  </Box>
+                </AccordionDetails>
+              </Accordion>
+
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Box display="flex" alignItems="center" gap={2}>
+                    <Typography variant="h6">Storage Services</Typography>
                     <Chip label="1 service" size="small" color="primary" />
                   </Box>
                 </AccordionSummary>
@@ -164,28 +325,28 @@ function Calculator() {
                       },
                       transition: 'all 0.2s',
                     }}
-                    onClick={handleAddEC2}
+                    onClick={handleAddS3}
                   >
                     <Box display="flex" justifyContent="space-between" alignItems="center">
                       <Box>
                         <Typography variant="h6" fontWeight="bold" gutterBottom>
-                          EC2 - Elastic Compute Cloud
+                          S3 - Simple Storage Service
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                          Virtual servers in the cloud with full Material UI implementation and
-                          Redis caching
+                          Object storage service with multiple storage classes for cost optimization
                         </Typography>
                         <Box mt={1}>
-                          <Chip label="Compute" size="small" sx={{ mr: 1 }} />
-                          <Chip label="Phase 2 Complete" size="small" color="success" />
+                          <Chip label="Storage" size="small" sx={{ mr: 1 }} />
+                          <Chip label="Available" size="small" color="success" />
                         </Box>
                       </Box>
                       <Button
                         variant="contained"
+                        color="success"
                         startIcon={<AddCircleOutlineIcon />}
-                        onClick={handleAddEC2}
+                        onClick={handleAddS3}
                       >
-                        Add EC2
+                        Add S3
                       </Button>
                     </Box>
                   </Paper>
@@ -195,28 +356,47 @@ function Calculator() {
               <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <Box display="flex" alignItems="center" gap={2}>
-                    <Typography variant="h6">Storage Services</Typography>
-                    <Chip label="Coming Soon" size="small" />
-                  </Box>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography variant="body2" color="text.secondary">
-                    S3, EBS, EFS, and more storage services will be added in future phases.
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-
-              <Accordion>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Box display="flex" alignItems="center" gap={2}>
                     <Typography variant="h6">Database Services</Typography>
-                    <Chip label="Coming Soon" size="small" />
+                    <Chip label="1 service" size="small" color="primary" />
                   </Box>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Typography variant="body2" color="text.secondary">
-                    RDS, DynamoDB, and other database services will be added in future phases.
-                  </Typography>
+                  <Paper
+                    variant="outlined"
+                    sx={{
+                      p: 2,
+                      cursor: 'pointer',
+                      '&:hover': {
+                        bgcolor: 'action.hover',
+                        borderColor: 'primary.main',
+                      },
+                      transition: 'all 0.2s',
+                    }}
+                    onClick={handleAddRDS}
+                  >
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                      <Box>
+                        <Typography variant="h6" fontWeight="bold" gutterBottom>
+                          RDS - Relational Database Service
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Managed relational databases including MySQL, PostgreSQL, Aurora, SQL Server, and Oracle
+                        </Typography>
+                        <Box mt={1}>
+                          <Chip label="Database" size="small" sx={{ mr: 1 }} />
+                          <Chip label="Available" size="small" color="success" />
+                        </Box>
+                      </Box>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        startIcon={<AddCircleOutlineIcon />}
+                        onClick={handleAddRDS}
+                      >
+                        Add RDS
+                      </Button>
+                    </Box>
+                  </Paper>
                 </AccordionDetails>
               </Accordion>
             </Paper>
@@ -231,6 +411,30 @@ function Calculator() {
                   <Box key={service.id} mb={3}>
                     {service.type === 'EC2' && (
                       <EC2ConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'S3' && (
+                      <S3ConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'RDS' && (
+                      <RDSConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'ECS' && (
+                      <ECSConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'Lambda' && (
+                      <LambdaConfigForm
                         onRemove={() => handleRemoveService(service.id)}
                         onCostUpdate={(data) => handleCostUpdate(service.id, data)}
                       />
@@ -253,7 +457,7 @@ function Calculator() {
                   No services configured yet
                 </Typography>
                 <Typography variant="body2" color="text.secondary" paragraph>
-                  Click "Add EC2" above to start configuring your first service
+                  Click "Add EC2", "Add ECS", "Add Lambda", "Add S3", or "Add RDS" above to start configuring your first service
                 </Typography>
               </Paper>
             )}
