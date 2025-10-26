@@ -81,6 +81,15 @@ function Calculator() {
     enqueueSnackbar('ECS service added to calculator', { variant: 'success' });
   };
 
+  // Handle adding Lambda service
+  const handleAddLambda = () => {
+    setConfiguredServices((prev) => [
+      ...prev,
+      { id: Date.now(), type: 'Lambda', data: null },
+    ]);
+    enqueueSnackbar('Lambda service added to calculator', { variant: 'success' });
+  };
+
   // Handle removing service
   const handleRemoveService = (serviceId) => {
     setConfiguredServices((prev) => prev.filter((s) => s.id !== serviceId));
