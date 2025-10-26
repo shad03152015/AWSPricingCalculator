@@ -330,7 +330,27 @@ function Calculator() {
             'ECS': 'Elastic Container Service',
             'Lambda': 'Lambda Functions',
             'EKS': 'Elastic Kubernetes Service',
-            'Aurora': 'Aurora Database'
+            'Aurora': 'Aurora Database',
+            'CloudFront': 'CloudFront CDN',
+            'Route53': 'Route 53 DNS',
+            'APIGateway': 'API Gateway',
+            'SNS': 'Simple Notification Service',
+            'SQS': 'Simple Queue Service',
+            'ElastiCache': 'ElastiCache',
+            'DynamoDB': 'DynamoDB',
+            'DocumentDB': 'DocumentDB',
+            'Neptune': 'Neptune Graph Database',
+            'Redshift': 'Redshift Data Warehouse',
+            'Kinesis': 'Kinesis Data Streams',
+            'EMR': 'Elastic MapReduce',
+            'Glue': 'AWS Glue ETL',
+            'Athena': 'Athena Query Service',
+            'StepFunctions': 'Step Functions',
+            'EventBridge': 'EventBridge',
+            'CloudWatch': 'CloudWatch Monitoring',
+            'SystemsManager': 'Systems Manager',
+            'SecretsManager': 'Secrets Manager',
+            'WAF': 'Web Application Firewall'
           };
 
           return {
