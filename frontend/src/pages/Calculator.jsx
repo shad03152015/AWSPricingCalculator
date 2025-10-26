@@ -166,6 +166,126 @@ function Calculator() {
     enqueueSnackbar('Aurora service added to calculator', { variant: 'success' });
   };
 
+  // Handle adding CloudFront service
+  const handleAddCloudFront = () => {
+    setConfiguredServices((prev) => [...prev, { id: Date.now(), type: 'CloudFront', data: null }]);
+    enqueueSnackbar('CloudFront service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding Route53 service
+  const handleAddRoute53 = () => {
+    setConfiguredServices((prev) => [...prev, { id: Date.now(), type: 'Route53', data: null }]);
+    enqueueSnackbar('Route 53 service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding API Gateway service
+  const handleAddAPIGateway = () => {
+    setConfiguredServices((prev) => [...prev, { id: Date.now(), type: 'APIGateway', data: null }]);
+    enqueueSnackbar('API Gateway service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding SNS service
+  const handleAddSNS = () => {
+    setConfiguredServices((prev) => [...prev, { id: Date.now(), type: 'SNS', data: null }]);
+    enqueueSnackbar('SNS service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding SQS service
+  const handleAddSQS = () => {
+    setConfiguredServices((prev) => [...prev, { id: Date.now(), type: 'SQS', data: null }]);
+    enqueueSnackbar('SQS service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding ElastiCache service
+  const handleAddElastiCache = () => {
+    setConfiguredServices((prev) => [...prev, { id: Date.now(), type: 'ElastiCache', data: null }]);
+    enqueueSnackbar('ElastiCache service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding DynamoDB service
+  const handleAddDynamoDB = () => {
+    setConfiguredServices((prev) => [...prev, { id: Date.now(), type: 'DynamoDB', data: null }]);
+    enqueueSnackbar('DynamoDB service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding DocumentDB service
+  const handleAddDocumentDB = () => {
+    setConfiguredServices((prev) => [...prev, { id: Date.now(), type: 'DocumentDB', data: null }]);
+    enqueueSnackbar('DocumentDB service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding Neptune service
+  const handleAddNeptune = () => {
+    setConfiguredServices((prev) => [...prev, { id: Date.now(), type: 'Neptune', data: null }]);
+    enqueueSnackbar('Neptune service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding Redshift service
+  const handleAddRedshift = () => {
+    setConfiguredServices((prev) => [...prev, { id: Date.now(), type: 'Redshift', data: null }]);
+    enqueueSnackbar('Redshift service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding Kinesis service
+  const handleAddKinesis = () => {
+    setConfiguredServices((prev) => [...prev, { id: Date.now(), type: 'Kinesis', data: null }]);
+    enqueueSnackbar('Kinesis service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding EMR service
+  const handleAddEMR = () => {
+    setConfiguredServices((prev) => [...prev, { id: Date.now(), type: 'EMR', data: null }]);
+    enqueueSnackbar('EMR service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding Glue service
+  const handleAddGlue = () => {
+    setConfiguredServices((prev) => [...prev, { id: Date.now(), type: 'Glue', data: null }]);
+    enqueueSnackbar('Glue service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding Athena service
+  const handleAddAthena = () => {
+    setConfiguredServices((prev) => [...prev, { id: Date.now(), type: 'Athena', data: null }]);
+    enqueueSnackbar('Athena service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding StepFunctions service
+  const handleAddStepFunctions = () => {
+    setConfiguredServices((prev) => [...prev, { id: Date.now(), type: 'StepFunctions', data: null }]);
+    enqueueSnackbar('Step Functions service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding EventBridge service
+  const handleAddEventBridge = () => {
+    setConfiguredServices((prev) => [...prev, { id: Date.now(), type: 'EventBridge', data: null }]);
+    enqueueSnackbar('EventBridge service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding CloudWatch service
+  const handleAddCloudWatch = () => {
+    setConfiguredServices((prev) => [...prev, { id: Date.now(), type: 'CloudWatch', data: null }]);
+    enqueueSnackbar('CloudWatch service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding SystemsManager service
+  const handleAddSystemsManager = () => {
+    setConfiguredServices((prev) => [...prev, { id: Date.now(), type: 'SystemsManager', data: null }]);
+    enqueueSnackbar('Systems Manager service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding SecretsManager service
+  const handleAddSecretsManager = () => {
+    setConfiguredServices((prev) => [...prev, { id: Date.now(), type: 'SecretsManager', data: null }]);
+    enqueueSnackbar('Secrets Manager service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding WAF service
+  const handleAddWAF = () => {
+    setConfiguredServices((prev) => [...prev, { id: Date.now(), type: 'WAF', data: null }]);
+    enqueueSnackbar('WAF service added to calculator', { variant: 'success' });
+  };
+
   // Handle removing service
   const handleRemoveService = (serviceId) => {
     setConfiguredServices((prev) => prev.filter((s) => s.id !== serviceId));
