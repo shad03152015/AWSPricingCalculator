@@ -77,7 +77,7 @@ function Dashboard() {
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="flex items-center mb-3">
-              <ChartBarIcon className="h-6 w-6 text-aws-orange mr-2" />
+              <ChartBarIcon sx={{ fontSize: 24 }} className="text-aws-orange mr-2" />
               <h3 className="text-lg font-semibold text-gray-900">Real-time Pricing</h3>
             </div>
             <p className="text-gray-600 text-sm">
@@ -87,7 +87,7 @@ function Dashboard() {
 
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="flex items-center mb-3">
-              <DocumentDuplicateIcon className="h-6 w-6 text-aws-orange mr-2" />
+              <DocumentIcon sx={{ fontSize: 24 }} className="text-aws-orange mr-2" />
               <h3 className="text-lg font-semibold text-gray-900">Save & Share</h3>
             </div>
             <p className="text-gray-600 text-sm">
@@ -97,7 +97,7 @@ function Dashboard() {
 
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="flex items-center mb-3">
-              <UserIcon className="h-6 w-6 text-aws-orange mr-2" />
+              <UserIcon sx={{ fontSize: 24 }} className="text-aws-orange mr-2" />
               <h3 className="text-lg font-semibold text-gray-900">Your Account</h3>
             </div>
             <p className="text-gray-600 text-sm">
