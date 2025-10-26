@@ -51,6 +51,15 @@ function Calculator() {
     enqueueSnackbar('EC2 service added to calculator', { variant: 'success' });
   };
 
+  // Handle adding S3 service
+  const handleAddS3 = () => {
+    setConfiguredServices((prev) => [
+      ...prev,
+      { id: Date.now(), type: 'S3', data: null },
+    ]);
+    enqueueSnackbar('S3 service added to calculator', { variant: 'success' });
+  };
+
   // Handle removing service
   const handleRemoveService = (serviceId) => {
     setConfiguredServices((prev) => prev.filter((s) => s.id !== serviceId));
