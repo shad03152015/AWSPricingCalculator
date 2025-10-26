@@ -6,6 +6,8 @@ import {
   calculateLambdaCost,
   calculateRDSCost
 } from '../services/awsPricing.js';
+import { calculationCacheMiddleware } from '../middleware/cache.js';
+import { CACHE_TTL } from '../config/redis.js';
 
 const router = express.Router();
 
@@ -89,17 +91,21 @@ router.get('/services', (req, res) => {
 });
 
 // POST /api/pricing/calculate - Calculate pricing for a service configuration
-router.post('/calculate', [
-  body('serviceCode')
-    .notEmpty()
-    .withMessage('Service code is required'),
-  body('region')
-    .notEmpty()
-    .withMessage('Region is required'),
-  body('configuration')
-    .isObject()
-    .withMessage('Configuration must be an object')
-], async (req, res) => {
+// Apply Redis caching with 1 hour TTL
+router.post('/calculate',
+  calculationCacheMiddleware(CACHE_TTL.CALCULATIONS),
+  [
+    body('serviceCode')
+      .notEmpty()
+      .withMessage('Service code is required'),
+    body('region')
+      .notEmpty()
+      .withMessage('Region is required'),
+    body('configuration')
+      .isObject()
+      .withMessage('Configuration must be an object')
+  ],
+  async (req, res) => {
   try {
     // Check for validation errors
     const errors = validationResult(req);

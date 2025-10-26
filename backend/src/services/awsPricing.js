@@ -79,42 +79,207 @@ export const getProductPricing = async (serviceCode, filters) => {
 };
 
 /**
- * Calculate EC2 cost
+ * EC2 Pricing Data (matches frontend data structure)
+ * In production, this would be fetched from AWS Pricing API and cached in Redis
  */
-export const calculateEC2Cost = async (region, configuration) => {
-  const { instanceType, operatingSystem, quantity, usageHours, pricingModel } = configuration;
+const EC2_PRICING_DATA = {
+  families: {
+    'General Purpose': {
+      types: [
+        { type: 't3.nano', vcpu: 2, memory: 0.5, hourlyPrice: 0.0052 },
+        { type: 't3.micro', vcpu: 2, memory: 1, hourlyPrice: 0.0104 },
+        { type: 't3.small', vcpu: 2, memory: 2, hourlyPrice: 0.0208 },
+        { type: 't3.medium', vcpu: 2, memory: 4, hourlyPrice: 0.0416 },
+        { type: 't3.large', vcpu: 2, memory: 8, hourlyPrice: 0.0832 },
+        { type: 't3.xlarge', vcpu: 4, memory: 16, hourlyPrice: 0.1664 },
+        { type: 't3.2xlarge', vcpu: 8, memory: 32, hourlyPrice: 0.3328 },
+        { type: 't4g.nano', vcpu: 2, memory: 0.5, hourlyPrice: 0.0042 },
+        { type: 't4g.micro', vcpu: 2, memory: 1, hourlyPrice: 0.0084 },
+        { type: 't4g.small', vcpu: 2, memory: 2, hourlyPrice: 0.0168 },
+        { type: 't4g.medium', vcpu: 2, memory: 4, hourlyPrice: 0.0336 },
+        { type: 't4g.large', vcpu: 2, memory: 8, hourlyPrice: 0.0672 },
+        { type: 'm5.large', vcpu: 2, memory: 8, hourlyPrice: 0.096 },
+        { type: 'm5.xlarge', vcpu: 4, memory: 16, hourlyPrice: 0.192 },
+        { type: 'm5.2xlarge', vcpu: 8, memory: 32, hourlyPrice: 0.384 },
+        { type: 'm5.4xlarge', vcpu: 16, memory: 64, hourlyPrice: 0.768 },
+        { type: 'm6i.large', vcpu: 2, memory: 8, hourlyPrice: 0.096 },
+        { type: 'm6i.xlarge', vcpu: 4, memory: 16, hourlyPrice: 0.192 },
+        { type: 'm6i.2xlarge', vcpu: 8, memory: 32, hourlyPrice: 0.384 },
+      ],
+    },
+    'Compute Optimized': {
+      types: [
+        { type: 'c5.large', vcpu: 2, memory: 4, hourlyPrice: 0.085 },
+        { type: 'c5.xlarge', vcpu: 4, memory: 8, hourlyPrice: 0.17 },
+        { type: 'c5.2xlarge', vcpu: 8, memory: 16, hourlyPrice: 0.34 },
+        { type: 'c5.4xlarge', vcpu: 16, memory: 32, hourlyPrice: 0.68 },
+        { type: 'c6i.large', vcpu: 2, memory: 4, hourlyPrice: 0.085 },
+        { type: 'c6i.xlarge', vcpu: 4, memory: 8, hourlyPrice: 0.17 },
+        { type: 'c6i.2xlarge', vcpu: 8, memory: 16, hourlyPrice: 0.34 },
+        { type: 'c6i.4xlarge', vcpu: 16, memory: 32, hourlyPrice: 0.68 },
+      ],
+    },
+    'Memory Optimized': {
+      types: [
+        { type: 'r5.large', vcpu: 2, memory: 16, hourlyPrice: 0.126 },
+        { type: 'r5.xlarge', vcpu: 4, memory: 32, hourlyPrice: 0.252 },
+        { type: 'r5.2xlarge', vcpu: 8, memory: 64, hourlyPrice: 0.504 },
+        { type: 'r5.4xlarge', vcpu: 16, memory: 128, hourlyPrice: 1.008 },
+        { type: 'r6i.large', vcpu: 2, memory: 16, hourlyPrice: 0.126 },
+        { type: 'r6i.xlarge', vcpu: 4, memory: 32, hourlyPrice: 0.252 },
+        { type: 'r6i.2xlarge', vcpu: 8, memory: 64, hourlyPrice: 0.504 },
+        { type: 'x2gd.medium', vcpu: 1, memory: 16, hourlyPrice: 0.167 },
+        { type: 'x2gd.large', vcpu: 2, memory: 32, hourlyPrice: 0.334 },
+      ],
+    },
+    'Storage Optimized': {
+      types: [
+        { type: 'i3.large', vcpu: 2, memory: 15.25, storage: 475, hourlyPrice: 0.156 },
+        { type: 'i3.xlarge', vcpu: 4, memory: 30.5, storage: 950, hourlyPrice: 0.312 },
+        { type: 'i3.2xlarge', vcpu: 8, memory: 61, storage: 1900, hourlyPrice: 0.624 },
+        { type: 'd3.xlarge', vcpu: 4, memory: 32, storage: 6000, hourlyPrice: 0.166 },
+        { type: 'd3.2xlarge', vcpu: 8, memory: 64, storage: 12000, hourlyPrice: 0.333 },
+      ],
+    },
+    'Accelerated Computing': {
+      types: [
+        { type: 'p3.2xlarge', vcpu: 8, memory: 61, gpu: 1, hourlyPrice: 3.06 },
+        { type: 'p3.8xlarge', vcpu: 32, memory: 244, gpu: 4, hourlyPrice: 12.24 },
+        { type: 'g4dn.xlarge', vcpu: 4, memory: 16, gpu: 1, hourlyPrice: 0.526 },
+        { type: 'g4dn.2xlarge', vcpu: 8, memory: 32, gpu: 1, hourlyPrice: 0.752 },
+      ],
+    },
+  },
+  osMultipliers: {
+    'Linux': 1.0,
+    'Windows': 1.6,
+    'RHEL': 1.3,
+    'SUSE': 1.2,
+    'Ubuntu Pro': 1.15,
+  },
+  pricingModelDiscounts: {
+    'On-Demand': 0,
+    'Reserved-1yr-No': 0.40,
+    'Reserved-1yr-Partial': 0.42,
+    'Reserved-1yr-All': 0.45,
+    'Reserved-3yr-No': 0.56,
+    'Reserved-3yr-Partial': 0.59,
+    'Reserved-3yr-All': 0.62,
+    'Savings Plan': 0.50,
+    'Spot': 0.70,
+  },
+  tenancyMultipliers: {
+    'Shared': 1.0,
+    'Dedicated Instance': 2.0,
+    'Dedicated Host': 2.5,
+  },
+  ebsVolumeTypes: {
+    'gp3': { pricePerGB: 0.08, additionalIOPS: 0.005, additionalThroughput: 0.04 },
+    'gp2': { pricePerGB: 0.10 },
+    'io2': { pricePerGB: 0.125, pricePerIOPS: 0.065 },
+    'io1': { pricePerGB: 0.125, pricePerIOPS: 0.065 },
+    'st1': { pricePerGB: 0.045 },
+    'sc1': { pricePerGB: 0.015 },
+  },
+  dataTransferPricing: {
+    first10TB: 0.09,
+    next40TB: 0.085,
+    next100TB: 0.07,
+    over150TB: 0.05,
+  },
+};
 
-  const filters = [
-    { Type: 'TERM_MATCH', Field: 'location', Value: mapRegionToLocation(region) },
-    { Type: 'TERM_MATCH', Field: 'instanceType', Value: instanceType },
-    { Type: 'TERM_MATCH', Field: 'operatingSystem', Value: operatingSystem || 'Linux' },
-    { Type: 'TERM_MATCH', Field: 'tenancy', Value: 'Shared' },
-    { Type: 'TERM_MATCH', Field: 'preInstalledSw', Value: 'NA' },
-    { Type: 'TERM_MATCH', Field: 'capacitystatus', Value: 'Used' }
-  ];
+/**
+ * Calculate EC2 cost with comprehensive pricing logic
+ */
+export const calculateEC2Cost = async (region, config) => {
+  const {
+    instanceType,
+    operatingSystem,
+    quantity = 1,
+    hoursPerMonth = 730,
+    pricingModel,
+    tenancy,
+    ebsVolumes = [],
+    dataTransferOut = 0,
+  } = config;
 
-  const pricingData = await getProductPricing('AmazonEC2', filters);
-
-  if (!pricingData || pricingData.length === 0) {
-    throw new Error('No pricing data found for the specified configuration');
+  // Find instance type details
+  let instanceDetails = null;
+  for (const family of Object.values(EC2_PRICING_DATA.families)) {
+    instanceDetails = family.types.find((t) => t.type === instanceType);
+    if (instanceDetails) break;
   }
 
-  // Extract pricing from OnDemand terms
-  const product = pricingData[0];
-  const onDemandTerms = Object.values(product.terms?.OnDemand || {})[0];
-  const priceDimensions = Object.values(onDemandTerms?.priceDimensions || {})[0];
-  const pricePerHour = parseFloat(priceDimensions?.pricePerUnit?.USD || 0);
+  if (!instanceDetails) {
+    throw new Error('Instance type not found in pricing data');
+  }
 
-  // Calculate monthly cost
-  const monthlyCost = pricePerHour * (usageHours || 730) * (quantity || 1);
+  // Base hourly price
+  let hourlyPrice = instanceDetails.hourlyPrice;
+
+  // Apply OS multiplier
+  const osMultiplier = EC2_PRICING_DATA.osMultipliers[operatingSystem] || 1.0;
+  hourlyPrice *= osMultiplier;
+
+  // Apply tenancy multiplier
+  const tenancyMultiplier = EC2_PRICING_DATA.tenancyMultipliers[tenancy] || 1.0;
+  hourlyPrice *= tenancyMultiplier;
+
+  // Apply pricing model discount
+  const discount = EC2_PRICING_DATA.pricingModelDiscounts[pricingModel] || 0;
+  if (discount > 0) {
+    hourlyPrice *= (1 - discount);
+  }
+
+  // Calculate instance cost
+  const instanceCost = hourlyPrice * hoursPerMonth * quantity;
+
+  // Calculate EBS cost
+  let ebsCost = 0;
+  ebsVolumes.forEach((volume) => {
+    const volumeType = EC2_PRICING_DATA.ebsVolumeTypes[volume.type];
+    if (volumeType) {
+      ebsCost += volumeType.pricePerGB * volume.size;
+      if (volume.iops && volumeType.pricePerIOPS) {
+        ebsCost += volumeType.pricePerIOPS * volume.iops;
+      }
+    }
+  });
+  ebsCost *= quantity; // Multiply by number of instances
+
+  // Calculate data transfer cost
+  let transferCost = 0;
+  if (dataTransferOut > 0) {
+    const pricing = EC2_PRICING_DATA.dataTransferPricing;
+    if (dataTransferOut <= 10240) {
+      transferCost = dataTransferOut * pricing.first10TB;
+    } else if (dataTransferOut <= 51200) {
+      transferCost = 10240 * pricing.first10TB + (dataTransferOut - 10240) * pricing.next40TB;
+    } else if (dataTransferOut <= 153600) {
+      transferCost =
+        10240 * pricing.first10TB +
+        40960 * pricing.next40TB +
+        (dataTransferOut - 51200) * pricing.next100TB;
+    } else {
+      transferCost =
+        10240 * pricing.first10TB +
+        40960 * pricing.next40TB +
+        102400 * pricing.next100TB +
+        (dataTransferOut - 153600) * pricing.over150TB;
+    }
+  }
+
+  const monthlyCost = instanceCost + ebsCost + transferCost;
 
   return {
     monthlyCost: Math.round(monthlyCost * 100) / 100,
     breakdown: {
-      pricePerHour,
-      usageHours: usageHours || 730,
-      quantity: quantity || 1
-    }
+      instanceCost: Math.round(instanceCost * 100) / 100,
+      ebsCost: Math.round(ebsCost * 100) / 100,
+      transferCost: Math.round(transferCost * 100) / 100,
+      hourlyRate: Math.round(hourlyPrice * 10000) / 10000,
+    },
   };
 };
 
