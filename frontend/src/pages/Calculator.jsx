@@ -30,6 +30,26 @@ import ECSConfigForm from '../components/services/ECSConfigForm';
 import LambdaConfigForm from '../components/services/LambdaConfigForm';
 import EKSConfigForm from '../components/services/EKSConfigForm';
 import AuroraConfigForm from '../components/services/AuroraConfigForm';
+import CloudFrontConfigForm from '../components/services/CloudFrontConfigForm';
+import Route53ConfigForm from '../components/services/Route53ConfigForm';
+import APIGatewayConfigForm from '../components/services/APIGatewayConfigForm';
+import SNSConfigForm from '../components/services/SNSConfigForm';
+import SQSConfigForm from '../components/services/SQSConfigForm';
+import ElastiCacheConfigForm from '../components/services/ElastiCacheConfigForm';
+import DynamoDBConfigForm from '../components/services/DynamoDBConfigForm';
+import DocumentDBConfigForm from '../components/services/DocumentDBConfigForm';
+import NeptuneConfigForm from '../components/services/NeptuneConfigForm';
+import RedshiftConfigForm from '../components/services/RedshiftConfigForm';
+import KinesisConfigForm from '../components/services/KinesisConfigForm';
+import EMRConfigForm from '../components/services/EMRConfigForm';
+import GlueConfigForm from '../components/services/GlueConfigForm';
+import AthenaConfigForm from '../components/services/AthenaConfigForm';
+import StepFunctionsConfigForm from '../components/services/StepFunctionsConfigForm';
+import EventBridgeConfigForm from '../components/services/EventBridgeConfigForm';
+import CloudWatchConfigForm from '../components/services/CloudWatchConfigForm';
+import SystemsManagerConfigForm from '../components/services/SystemsManagerConfigForm';
+import SecretsManagerConfigForm from '../components/services/SecretsManagerConfigForm';
+import WAFConfigForm from '../components/services/WAFConfigForm';
 import CostSummaryCard from '../components/CostSummaryCard';
 
 function Calculator() {
