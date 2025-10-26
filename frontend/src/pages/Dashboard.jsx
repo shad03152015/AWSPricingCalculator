@@ -21,7 +21,7 @@ function Dashboard() {
     {
       name: 'My Estimates',
       description: 'View and manage your saved cost estimates',
-      icon: DocumentDuplicateIcon,
+      icon: DocumentIcon,
       link: '/estimates',
       color: 'bg-green-500',
     },
