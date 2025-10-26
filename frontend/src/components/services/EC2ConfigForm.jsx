@@ -183,31 +183,106 @@ const EC2ConfigForm = ({ onRemove, onCostUpdate }) => {
               </FormControl>
             </Grid>
 
-            {/* Instance Type */}
+            {/* vCPU Filter */}
             <Grid item xs={12} md={6}>
+              <FormControl fullWidth>
+                <InputLabel>Filter by vCPUs</InputLabel>
+                <Select
+                  value={vcpuFilter}
+                  label="Filter by vCPUs"
+                  onChange={(e) => setVcpuFilter(e.target.value)}
+                >
+                  <MenuItem value="">All vCPU Counts</MenuItem>
+                  {vcpuOptions.map((vcpu) => (
+                    <MenuItem key={vcpu} value={vcpu}>
+                      {vcpu} vCPU{vcpu > 1 ? 's' : ''}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+
+            {/* Instance Type */}
+            <Grid item xs={12}>
               <Autocomplete
                 options={instanceTypes}
                 groupBy={(option) => option.family}
-                getOptionLabel={(option) => option.label}
+                getOptionLabel={(option) => option.type}
                 renderOption={(props, option) => (
-                  <Box component="li" {...props}>
-                    <Box>
+                  <Box
+                    component="li"
+                    {...props}
+                    sx={{
+                      display: 'block !important',
+                      borderBottom: '1px solid',
+                      borderColor: 'divider',
+                      py: 1.5
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: 'grid',
+                        gridTemplateColumns: '2fr 1fr 1.5fr 2fr 2fr 1.5fr 1fr',
+                        gap: 2,
+                        alignItems: 'center',
+                        width: '100%'
+                      }}
+                    >
                       <Typography variant="body2" fontWeight="bold">
                         {option.type}
                       </Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        {option.vcpu} vCPU, {option.memory} GB RAM
-                        {option.arch ? ` (${option.arch})` : ''}
-                        {option.gpu ? ` - ${option.gpu} GPU` : ''}
+                      <Typography variant="body2" color="text.secondary">
+                        {option.vcpu}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {option.memory} GiB
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.8rem' }}>
+                        {option.network}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.8rem' }}>
+                        {option.storage}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        ${option.hourlyPrice}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {option.currentGen ? 'Yes' : 'No'}
                       </Typography>
                     </Box>
                   </Box>
                 )}
                 onChange={handleInstanceTypeChange}
                 renderInput={(params) => (
-                  <TextField {...params} label="Instance Type" required />
+                  <TextField
+                    {...params}
+                    label="Instance Type"
+                    required
+                    helperText="Select an instance type to see detailed specifications"
+                  />
                 )}
               />
+              {/* Column Headers */}
+              <Box
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: '2fr 1fr 1.5fr 2fr 2fr 1.5fr 1fr',
+                  gap: 2,
+                  mt: 1,
+                  px: 2,
+                  py: 1,
+                  bgcolor: 'action.hover',
+                  borderRadius: 1
+                }}
+              >
+                <Typography variant="caption" fontWeight="bold">Instance name</Typography>
+                <Typography variant="caption" fontWeight="bold">vCPUs</Typography>
+                <Typography variant="caption" fontWeight="bold">Memory</Typography>
+                <Typography variant="caption" fontWeight="bold">Network Performance</Typography>
+                <Typography variant="caption" fontWeight="bold">Storage</Typography>
+                <Typography variant="caption" fontWeight="bold">On-Demand Hourly Cost</Typography>
+                <Typography variant="caption" fontWeight="bold">Current Gen</Typography>
+              </Box>
             </Grid>
 
             {/* Operating System */}
