@@ -302,7 +302,7 @@ function Calculator() {
                   No services configured yet
                 </Typography>
                 <Typography variant="body2" color="text.secondary" paragraph>
-                  Click "Add EC2" above to start configuring your first service
+                  Click "Add EC2" or "Add S3" above to start configuring your first service
                 </Typography>
               </Paper>
             )}
