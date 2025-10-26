@@ -137,7 +137,11 @@ function Calculator() {
   };
 
   const handleSaveConfirm = async () => {
+    if (isSaving) return; // Prevent duplicate submissions
+
     try {
+      setIsSaving(true);
+
       // Prepare estimate data
       const estimateData = {
         name: estimateName.trim(),
@@ -151,6 +155,7 @@ function Calculator() {
       // Validate that we have services
       if (estimateData.services.length === 0) {
         enqueueSnackbar('Please configure at least one service before saving', { variant: 'warning' });
+        setIsSaving(false);
         return;
       }
 
@@ -165,6 +170,8 @@ function Calculator() {
     } catch (error) {
       console.error('Save estimate error:', error);
       enqueueSnackbar(error || 'Failed to save estimate', { variant: 'error' });
+    } finally {
+      setIsSaving(false);
     }
   };
 
