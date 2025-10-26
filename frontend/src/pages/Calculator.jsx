@@ -262,13 +262,46 @@ function Calculator() {
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <Box display="flex" alignItems="center" gap={2}>
                     <Typography variant="h6">Database Services</Typography>
-                    <Chip label="Coming Soon" size="small" />
+                    <Chip label="1 service" size="small" color="primary" />
                   </Box>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Typography variant="body2" color="text.secondary">
-                    RDS, DynamoDB, and other database services will be added in future phases.
-                  </Typography>
+                  <Paper
+                    variant="outlined"
+                    sx={{
+                      p: 2,
+                      cursor: 'pointer',
+                      '&:hover': {
+                        bgcolor: 'action.hover',
+                        borderColor: 'primary.main',
+                      },
+                      transition: 'all 0.2s',
+                    }}
+                    onClick={handleAddRDS}
+                  >
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                      <Box>
+                        <Typography variant="h6" fontWeight="bold" gutterBottom>
+                          RDS - Relational Database Service
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Managed relational databases including MySQL, PostgreSQL, Aurora, SQL Server, and Oracle
+                        </Typography>
+                        <Box mt={1}>
+                          <Chip label="Database" size="small" sx={{ mr: 1 }} />
+                          <Chip label="Available" size="small" color="success" />
+                        </Box>
+                      </Box>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        startIcon={<AddCircleOutlineIcon />}
+                        onClick={handleAddRDS}
+                      >
+                        Add RDS
+                      </Button>
+                    </Box>
+                  </Paper>
                 </AccordionDetails>
               </Accordion>
             </Paper>
