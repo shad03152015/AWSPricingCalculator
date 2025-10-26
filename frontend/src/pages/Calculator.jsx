@@ -542,6 +542,12 @@ function Calculator() {
                         onCostUpdate={(data) => handleCostUpdate(service.id, data)}
                       />
                     )}
+                    {service.type === 'Aurora' && (
+                      <AuroraConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
                   </Box>
                 ))}
               </Box>
