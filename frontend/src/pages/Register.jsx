@@ -18,7 +18,7 @@ function Register() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/calculator');
+      navigate('/dashboard', { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
