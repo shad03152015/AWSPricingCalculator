@@ -6,6 +6,8 @@ import {
   calculateLambdaCost,
   calculateRDSCost
 } from '../services/awsPricing.js';
+import { calculationCacheMiddleware } from '../middleware/cache.js';
+import { CACHE_TTL } from '../config/redis.js';
 
 const router = express.Router();
 
