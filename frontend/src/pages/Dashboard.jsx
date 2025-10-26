@@ -55,8 +55,8 @@ function Dashboard() {
             >
               <div className="p-6">
                 <div className="flex items-center mb-4">
-                  <div className={`${feature.color} p-3 rounded-lg mr-4`}>
-                    <feature.icon className="h-6 w-6 text-white" />
+                  <div className={`${feature.color} p-3 rounded-lg mr-4 flex items-center justify-center`}>
+                    <feature.icon sx={{ fontSize: 24, color: 'white' }} />
                   </div>
                   <h3 className="text-xl font-semibold text-gray-900 group-hover:text-aws-orange transition-colors">
                     {feature.name}
