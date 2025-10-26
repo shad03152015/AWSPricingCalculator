@@ -897,6 +897,126 @@ function Calculator() {
                         onCostUpdate={(data) => handleCostUpdate(service.id, data)}
                       />
                     )}
+                    {service.type === 'CloudFront' && (
+                      <CloudFrontConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'Route53' && (
+                      <Route53ConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'APIGateway' && (
+                      <APIGatewayConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'SNS' && (
+                      <SNSConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'SQS' && (
+                      <SQSConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'ElastiCache' && (
+                      <ElastiCacheConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'DynamoDB' && (
+                      <DynamoDBConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'DocumentDB' && (
+                      <DocumentDBConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'Neptune' && (
+                      <NeptuneConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'Redshift' && (
+                      <RedshiftConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'Kinesis' && (
+                      <KinesisConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'EMR' && (
+                      <EMRConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'Glue' && (
+                      <GlueConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'Athena' && (
+                      <AthenaConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'StepFunctions' && (
+                      <StepFunctionsConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'EventBridge' && (
+                      <EventBridgeConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'CloudWatch' && (
+                      <CloudWatchConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'SystemsManager' && (
+                      <SystemsManagerConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'SecretsManager' && (
+                      <SecretsManagerConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'WAF' && (
+                      <WAFConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
                   </Box>
                 ))}
               </Box>
