@@ -71,6 +71,15 @@ function Calculator() {
     enqueueSnackbar('RDS service added to calculator', { variant: 'success' });
   };
 
+  // Handle adding ECS service
+  const handleAddECS = () => {
+    setConfiguredServices((prev) => [
+      ...prev,
+      { id: Date.now(), type: 'ECS', data: null },
+    ]);
+    enqueueSnackbar('ECS service added to calculator', { variant: 'success' });
+  };
+
   // Handle removing service
   const handleRemoveService = (serviceId) => {
     setConfiguredServices((prev) => prev.filter((s) => s.id !== serviceId));
