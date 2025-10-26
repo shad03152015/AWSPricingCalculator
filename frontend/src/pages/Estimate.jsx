@@ -5,10 +5,18 @@ import { fetchEstimates } from '../store/slices/estimatesSlice';
 
 function Estimate() {
   const dispatch = useDispatch();
-  const { list, isLoading } = useSelector((state) => state.estimates);
+  const { list, isLoading, error } = useSelector((state) => state.estimates);
 
   useEffect(() => {
-    dispatch(fetchEstimates());
+    let mounted = true;
+
+    if (mounted) {
+      dispatch(fetchEstimates());
+    }
+
+    return () => {
+      mounted = false;
+    };
   }, [dispatch]);
 
   const formatDate = (dateString) => {
