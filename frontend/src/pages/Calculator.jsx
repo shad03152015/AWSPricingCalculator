@@ -61,6 +61,15 @@ function Calculator() {
     enqueueSnackbar('S3 service added to calculator', { variant: 'success' });
   };
 
+  // Handle adding RDS service
+  const handleAddRDS = () => {
+    setConfiguredServices((prev) => [
+      ...prev,
+      { id: Date.now(), type: 'RDS', data: null },
+    ]);
+    enqueueSnackbar('RDS service added to calculator', { variant: 'success' });
+  };
+
   // Handle removing service
   const handleRemoveService = (serviceId) => {
     setConfiguredServices((prev) => prev.filter((s) => s.id !== serviceId));
