@@ -27,6 +27,7 @@ router.get('/', async (req, res) => {
 
     // Fetch estimates
     const estimates = await Estimate.find(query).sort(sort);
+    console.log(`[Estimates] Found ${estimates.length} estimates`);
 
     res.status(200).json({
       success: true,
