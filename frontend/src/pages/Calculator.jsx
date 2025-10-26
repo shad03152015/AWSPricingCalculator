@@ -91,6 +91,15 @@ function Calculator() {
     enqueueSnackbar('Lambda service added to calculator', { variant: 'success' });
   };
 
+  // Handle adding EKS service
+  const handleAddEKS = () => {
+    setConfiguredServices((prev) => [
+      ...prev,
+      { id: Date.now(), type: 'EKS', data: null },
+    ]);
+    enqueueSnackbar('EKS service added to calculator', { variant: 'success' });
+  };
+
   // Handle removing service
   const handleRemoveService = (serviceId) => {
     setConfiguredServices((prev) => prev.filter((s) => s.id !== serviceId));
