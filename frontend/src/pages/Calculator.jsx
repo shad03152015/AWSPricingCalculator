@@ -649,13 +649,13 @@ function Calculator() {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setSaveDialogOpen(false)}>Cancel</Button>
+          <Button onClick={() => setSaveDialogOpen(false)} disabled={isSaving}>Cancel</Button>
           <Button
             variant="contained"
             onClick={handleSaveConfirm}
-            disabled={!estimateName.trim()}
+            disabled={!estimateName.trim() || isSaving}
           >
-            Save Estimate
+            {isSaving ? 'Saving...' : 'Save Estimate'}
           </Button>
         </DialogActions>
       </Dialog>
