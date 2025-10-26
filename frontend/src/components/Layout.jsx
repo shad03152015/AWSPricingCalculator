@@ -19,7 +19,7 @@ function Layout() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <Link to="/calculator" className="flex items-center">
+            <Link to={isAuthenticated ? "/dashboard" : "/"} className="flex items-center">
               <span className="text-xl font-bold text-aws-orange">AWS</span>
               <span className="text-xl font-bold ml-2">Pricing Calculator</span>
             </Link>
@@ -28,6 +28,12 @@ function Layout() {
             <div className="flex items-center space-x-4">
               {isAuthenticated ? (
                 <>
+                  <Link
+                    to="/dashboard"
+                    className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 transition"
+                  >
+                    Dashboard
+                  </Link>
                   <Link
                     to="/calculator"
                     className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 transition"
