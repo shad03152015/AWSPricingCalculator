@@ -191,14 +191,14 @@ function Calculator() {
                 Available Services
               </Typography>
               <Typography variant="body2" color="text.secondary" paragraph>
-                Select services to configure and estimate costs. Currently available: EC2, ECS, Lambda (Compute), S3 (Storage), and RDS (Database).
+                Select services to configure and estimate costs. Currently available: EC2, ECS, EKS, Lambda (Compute), S3 (Storage), and RDS (Database).
               </Typography>
 
               <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <Box display="flex" alignItems="center" gap={2}>
                     <Typography variant="h6">Compute Services</Typography>
-                    <Chip label="3 services" size="small" color="primary" />
+                    <Chip label="4 services" size="small" color="primary" />
                   </Box>
                 </AccordionSummary>
                 <AccordionDetails>
