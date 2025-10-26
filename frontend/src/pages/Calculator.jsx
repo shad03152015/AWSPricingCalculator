@@ -21,6 +21,7 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { loadAvailableServices, addService } from '../store/slices/calculatorSlice';
+import { createEstimate } from '../store/slices/estimatesSlice';
 import EC2ConfigForm from '../components/services/EC2ConfigForm';
 import S3ConfigForm from '../components/services/S3ConfigForm';
 import RDSConfigForm from '../components/services/RDSConfigForm';
@@ -39,6 +40,7 @@ function Calculator() {
   const [saveDialogOpen, setSaveDialogOpen] = useState(false);
   const [estimateName, setEstimateName] = useState('');
   const [estimateDescription, setEstimateDescription] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
 
   // State for configured services
   const [configuredServices, setConfiguredServices] = useState([]);
@@ -134,12 +136,43 @@ function Calculator() {
     setSaveDialogOpen(true);
   };
 
-  const handleSaveConfirm = () => {
-    // TODO: Implement save to backend
-    enqueueSnackbar('Estimate saved successfully!', { variant: 'success' });
-    setSaveDialogOpen(false);
-    setEstimateName('');
-    setEstimateDescription('');
+  const handleSaveConfirm = async () => {
+    if (isSaving) return; // Prevent duplicate submissions
+
+    try {
+      setIsSaving(true);
+
+      // Prepare estimate data
+      const estimateData = {
+        name: estimateName.trim(),
+        description: estimateDescription.trim() || undefined,
+        services: configuredServices
+          .filter((s) => s.data)
+          .map((s) => s.data),
+        totalMonthlyCost: calculatedTotal,
+      };
+
+      // Validate that we have services
+      if (estimateData.services.length === 0) {
+        enqueueSnackbar('Please configure at least one service before saving', { variant: 'warning' });
+        setIsSaving(false);
+        return;
+      }
+
+      // Dispatch create estimate action
+      await dispatch(createEstimate(estimateData)).unwrap();
+
+      // Success
+      enqueueSnackbar('Estimate saved successfully!', { variant: 'success' });
+      setSaveDialogOpen(false);
+      setEstimateName('');
+      setEstimateDescription('');
+    } catch (error) {
+      console.error('Save estimate error:', error);
+      enqueueSnackbar(error || 'Failed to save estimate', { variant: 'error' });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   // Handle share estimate
@@ -616,13 +649,13 @@ function Calculator() {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setSaveDialogOpen(false)}>Cancel</Button>
+          <Button onClick={() => setSaveDialogOpen(false)} disabled={isSaving}>Cancel</Button>
           <Button
             variant="contained"
             onClick={handleSaveConfirm}
-            disabled={!estimateName.trim()}
+            disabled={!estimateName.trim() || isSaving}
           >
-            Save Estimate
+            {isSaving ? 'Saving...' : 'Save Estimate'}
           </Button>
         </DialogActions>
       </Dialog>
