@@ -101,6 +101,15 @@ function Calculator() {
     enqueueSnackbar('EKS service added to calculator', { variant: 'success' });
   };
 
+  // Handle adding Aurora service
+  const handleAddAurora = () => {
+    setConfiguredServices((prev) => [
+      ...prev,
+      { id: Date.now(), type: 'Aurora', data: null },
+    ]);
+    enqueueSnackbar('Aurora service added to calculator', { variant: 'success' });
+  };
+
   // Handle removing service
   const handleRemoveService = (serviceId) => {
     setConfiguredServices((prev) => prev.filter((s) => s.id !== serviceId));
