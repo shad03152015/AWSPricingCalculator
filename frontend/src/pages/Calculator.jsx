@@ -34,6 +34,7 @@ function Calculator() {
   const [saveDialogOpen, setSaveDialogOpen] = useState(false);
   const [estimateName, setEstimateName] = useState('');
   const [estimateDescription, setEstimateDescription] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
 
   // State for configured services
   const [configuredServices, setConfiguredServices] = useState([]);
