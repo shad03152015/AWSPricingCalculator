@@ -465,7 +465,7 @@ function Calculator() {
                 Available Services
               </Typography>
               <Typography variant="body2" color="text.secondary" paragraph>
-                Select services to configure and estimate costs. Currently available: EC2, ECS, EKS, Lambda (Compute), S3 (Storage), RDS, and Aurora (Database).
+                Select services to configure and estimate costs. 27 AWS services available across Compute, Storage, Database, Networking, Analytics, and more.
               </Typography>
 
               <Accordion>
