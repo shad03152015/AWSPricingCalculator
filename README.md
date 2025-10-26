@@ -127,7 +127,13 @@ backend/
    VITE_API_URL=http://localhost:5000/api
    ```
 
-   **Backend** (create `backend/.env`):
+   **Backend** (create `backend/.env` from `backend/.env.example`):
+   ```bash
+   cd backend
+   cp .env.example .env
+   ```
+
+   Then edit `.env` and set a secure JWT_SECRET:
    ```env
    NODE_ENV=development
    PORT=5000
@@ -135,6 +141,13 @@ backend/
    JWT_SECRET=your-secret-key-here-change-this
    FRONTEND_URL=http://localhost:5173
    ```
+
+   **Generate a secure JWT_SECRET:**
+   ```bash
+   node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+   ```
+
+   > **Note:** The backend will auto-generate a development JWT_SECRET if not set, but this is only for convenience during development. Always set a secure secret in production.
 
 6. **Start development servers:**
 
