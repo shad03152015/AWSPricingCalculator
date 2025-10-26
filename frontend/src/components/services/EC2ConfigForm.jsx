@@ -371,7 +371,7 @@ const EC2ConfigForm = ({ onRemove, onCostUpdate }) => {
                 <Typography>
                   Usage Hours per Month: {config.hoursPerMonth}
                 </Typography>
-                <Tooltip title="730 hours = 24/7 operation">
+                <Tooltip title="730 hours = 24/7 operation, 365 hours = 50%, 182 hours = 25%">
                   <InfoIcon fontSize="small" color="action" />
                 </Tooltip>
               </Box>
@@ -383,12 +383,28 @@ const EC2ConfigForm = ({ onRemove, onCostUpdate }) => {
                 step={1}
                 marks={[
                   { value: 1, label: '1h' },
-                  { value: 182, label: '182h (25%)' },
-                  { value: 365, label: '365h (50%)' },
-                  { value: 730, label: '730h (24/7)' },
+                  { value: 182, label: '182h' },
+                  { value: 365, label: '365h' },
+                  { value: 730, label: '730h' },
                 ]}
                 valueLabelDisplay="auto"
+                sx={{
+                  '& .MuiSlider-markLabel': {
+                    fontSize: '0.75rem',
+                  },
+                }}
               />
+              <Box display="flex" justifyContent="space-between" mt={0.5}>
+                <Typography variant="caption" color="text.secondary">
+                  (25%)
+                </Typography>
+                <Typography variant="caption" color="text.secondary">
+                  (50%)
+                </Typography>
+                <Typography variant="caption" color="text.secondary">
+                  (24/7)
+                </Typography>
+              </Box>
             </Grid>
 
             {/* Instance Summary */}
