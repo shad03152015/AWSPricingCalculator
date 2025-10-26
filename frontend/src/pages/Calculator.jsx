@@ -1035,7 +1035,7 @@ function Calculator() {
                   No services configured yet
                 </Typography>
                 <Typography variant="body2" color="text.secondary" paragraph>
-                  Click "Add EC2", "Add ECS", "Add Lambda", "Add EKS", "Add S3", "Add RDS", or "Add Aurora" above to start configuring your first service
+                  Select from 27 AWS services above to start configuring your cost estimate
                 </Typography>
               </Paper>
             )}
