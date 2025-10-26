@@ -22,6 +22,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { loadAvailableServices, addService } from '../store/slices/calculatorSlice';
 import EC2ConfigForm from '../components/services/EC2ConfigForm';
+import S3ConfigForm from '../components/services/S3ConfigForm';
 import CostSummaryCard from '../components/CostSummaryCard';
 
 function Calculator() {
