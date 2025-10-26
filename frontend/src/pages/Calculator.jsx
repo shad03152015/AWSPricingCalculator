@@ -24,6 +24,7 @@ import { loadAvailableServices, addService } from '../store/slices/calculatorSli
 import EC2ConfigForm from '../components/services/EC2ConfigForm';
 import S3ConfigForm from '../components/services/S3ConfigForm';
 import RDSConfigForm from '../components/services/RDSConfigForm';
+import ECSConfigForm from '../components/services/ECSConfigForm';
 import CostSummaryCard from '../components/CostSummaryCard';
 
 function Calculator() {
