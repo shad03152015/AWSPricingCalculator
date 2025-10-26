@@ -345,9 +345,15 @@ This implementation includes:
 - Consider implementing request queuing for high load
 
 **Authentication not working:**
-- Verify JWT_SECRET is set in backend .env
+- Verify JWT_SECRET is set in backend .env (or using auto-generated dev secret)
 - Check token is being sent in Authorization header
 - Clear localStorage and try logging in again
+- Look for warning messages at backend startup about missing JWT_SECRET
+
+**JWT_SECRET error during registration/login:**
+- Create `backend/.env` file from `backend/.env.example`
+- Set a secure JWT_SECRET (see setup instructions)
+- In development, backend will auto-generate a secret with a warning
 
 **CORS errors:**
 - Verify FRONTEND_URL in backend .env matches your frontend URL
