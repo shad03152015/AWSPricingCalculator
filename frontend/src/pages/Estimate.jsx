@@ -1,11 +1,38 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { fetchEstimates } from '../store/slices/estimatesSlice';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
+import { fetchEstimates, deleteEstimate } from '../store/slices/estimatesSlice';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Box,
+  Typography,
+  Divider,
+  Chip,
+} from '@mui/material';
 
 function Estimate() {
   const dispatch = useDispatch();
+<<<<<<< HEAD
   const { list, isLoading, error } = useSelector((state) => state.estimates);
+=======
+  const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
+  const { list, isLoading } = useSelector((state) => state.estimates);
+>>>>>>> b8e17bb (Auto-commit: Agent tool execution)
+
+  // View dialog state
+  const [viewDialogOpen, setViewDialogOpen] = useState(false);
+  const [selectedEstimate, setSelectedEstimate] = useState(null);
+
+  // Delete confirmation dialog state
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [estimateToDelete, setEstimateToDelete] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -25,6 +52,51 @@ function Estimate() {
       month: 'short',
       day: 'numeric',
     });
+  };
+
+  // Handle View
+  const handleView = (estimate) => {
+    setSelectedEstimate(estimate);
+    setViewDialogOpen(true);
+  };
+
+  const handleCloseView = () => {
+    setViewDialogOpen(false);
+    setSelectedEstimate(null);
+  };
+
+  // Handle Edit
+  const handleEdit = (estimate) => {
+    // Navigate to calculator with estimate data in state
+    navigate('/calculator', { state: { estimate } });
+  };
+
+  // Handle Delete
+  const handleDeleteClick = (estimate) => {
+    setEstimateToDelete(estimate);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!estimateToDelete || isDeleting) return;
+
+    try {
+      setIsDeleting(true);
+      await dispatch(deleteEstimate(estimateToDelete._id)).unwrap();
+      enqueueSnackbar('Estimate deleted successfully', { variant: 'success' });
+      setDeleteDialogOpen(false);
+      setEstimateToDelete(null);
+    } catch (error) {
+      console.error('Delete estimate error:', error);
+      enqueueSnackbar(error || 'Failed to delete estimate', { variant: 'error' });
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteDialogOpen(false);
+    setEstimateToDelete(null);
   };
 
   return (
@@ -100,13 +172,22 @@ function Estimate() {
                 </div>
 
                 <div className="flex space-x-2">
-                  <button className="flex-1 bg-blue-500 text-white py-2 px-3 rounded-md hover:bg-blue-600 transition text-sm font-medium">
+                  <button
+                    onClick={() => handleView(estimate)}
+                    className="flex-1 bg-blue-500 text-white py-2 px-3 rounded-md hover:bg-blue-600 transition text-sm font-medium"
+                  >
                     View
                   </button>
-                  <button className="flex-1 bg-gray-200 text-gray-700 py-2 px-3 rounded-md hover:bg-gray-300 transition text-sm font-medium">
+                  <button
+                    onClick={() => handleEdit(estimate)}
+                    className="flex-1 bg-gray-200 text-gray-700 py-2 px-3 rounded-md hover:bg-gray-300 transition text-sm font-medium"
+                  >
                     Edit
                   </button>
-                  <button className="flex-1 bg-red-500 text-white py-2 px-3 rounded-md hover:bg-red-600 transition text-sm font-medium">
+                  <button
+                    onClick={() => handleDeleteClick(estimate)}
+                    className="flex-1 bg-red-500 text-white py-2 px-3 rounded-md hover:bg-red-600 transition text-sm font-medium"
+                  >
                     Delete
                   </button>
                 </div>
@@ -141,6 +222,158 @@ function Estimate() {
           </div>
         )}
       </div>
+
+      {/* View Dialog */}
+      <Dialog
+        open={viewDialogOpen}
+        onClose={handleCloseView}
+        maxWidth="md"
+        fullWidth
+      >
+        <DialogTitle>
+          <Typography variant="h5" fontWeight="bold">
+            {selectedEstimate?.name}
+          </Typography>
+          {selectedEstimate?.description && (
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+              {selectedEstimate.description}
+            </Typography>
+          )}
+        </DialogTitle>
+        <DialogContent>
+          <Box sx={{ pt: 2 }}>
+            {/* Cost Summary */}
+            <Box sx={{ mb: 3, p: 2, bgcolor: 'grey.50', borderRadius: 1 }}>
+              <Typography variant="h6" gutterBottom>
+                Cost Summary
+              </Typography>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                <Typography variant="body1" color="text.secondary">
+                  Monthly Cost:
+                </Typography>
+                <Typography variant="h5" color="primary" fontWeight="bold">
+                  ${selectedEstimate?.totalMonthlyCost.toFixed(2)}
+                </Typography>
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Typography variant="body1" color="text.secondary">
+                  Annual Cost:
+                </Typography>
+                <Typography variant="h6" color="text.primary" fontWeight="bold">
+                  ${selectedEstimate?.totalAnnualCost.toFixed(2)}
+                </Typography>
+              </Box>
+            </Box>
+
+            <Divider sx={{ my: 2 }} />
+
+            {/* Services */}
+            <Typography variant="h6" gutterBottom>
+              Services ({selectedEstimate?.services.length})
+            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              {selectedEstimate?.services.map((service, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    p: 2,
+                    border: '1px solid',
+                    borderColor: 'grey.300',
+                    borderRadius: 1,
+                  }}
+                >
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
+                    <Box>
+                      <Typography variant="subtitle1" fontWeight="bold">
+                        {service.serviceName}
+                      </Typography>
+                      <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
+                        <Chip
+                          label={service.serviceCode}
+                          size="small"
+                          color="primary"
+                          variant="outlined"
+                        />
+                        <Chip
+                          label={service.region}
+                          size="small"
+                          variant="outlined"
+                        />
+                      </Box>
+                    </Box>
+                    <Typography variant="h6" color="primary" fontWeight="bold">
+                      ${service.monthlyCost.toFixed(2)}/mo
+                    </Typography>
+                  </Box>
+                </Box>
+              ))}
+            </Box>
+
+            <Divider sx={{ my: 2 }} />
+
+            {/* Metadata */}
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Typography variant="caption" color="text.secondary">
+                Created: {selectedEstimate?.createdAt && formatDate(selectedEstimate.createdAt)}
+              </Typography>
+              {selectedEstimate?.updatedAt && selectedEstimate.updatedAt !== selectedEstimate.createdAt && (
+                <Typography variant="caption" color="text.secondary">
+                  Updated: {formatDate(selectedEstimate.updatedAt)}
+                </Typography>
+              )}
+            </Box>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseView}>Close</Button>
+          <Button
+            variant="contained"
+            onClick={() => {
+              handleCloseView();
+              handleEdit(selectedEstimate);
+            }}
+          >
+            Edit Estimate
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={handleDeleteCancel}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>
+          <Typography variant="h6" fontWeight="bold">
+            Delete Estimate?
+          </Typography>
+        </DialogTitle>
+        <DialogContent>
+          <Typography variant="body1" color="text.secondary">
+            Are you sure you want to delete "{estimateToDelete?.name}"? This action cannot be undone.
+          </Typography>
+          <Box sx={{ mt: 2, p: 2, bgcolor: 'error.50', borderRadius: 1, border: '1px solid', borderColor: 'error.200' }}>
+            <Typography variant="body2" color="error.dark">
+              This will permanently delete this estimate and all its configuration data.
+            </Typography>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteCancel} disabled={isDeleting}>
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={handleDeleteConfirm}
+            disabled={isDeleting}
+          >
+            {isDeleting ? 'Deleting...' : 'Delete'}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
