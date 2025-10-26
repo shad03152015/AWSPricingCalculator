@@ -404,20 +404,50 @@ const EC2ConfigForm = ({ onRemove, onCostUpdate }) => {
                   <Typography variant="subtitle2" gutterBottom>
                     Selected Instance Details:
                   </Typography>
-                  <Typography variant="body2">
-                    <strong>Type:</strong> {selectedInstance.type} |{' '}
-                    <strong>vCPU:</strong> {selectedInstance.vcpu} |{' '}
-                    <strong>Memory:</strong> {selectedInstance.memory} GB
-                    {selectedInstance.storage && (
-                      <> | <strong>Storage:</strong> {selectedInstance.storage} GB</>
-                    )}
+                  <Grid container spacing={1}>
+                    <Grid item xs={6} sm={4} md={3}>
+                      <Typography variant="body2">
+                        <strong>Type:</strong> {selectedInstance.type}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6} sm={4} md={3}>
+                      <Typography variant="body2">
+                        <strong>vCPU:</strong> {selectedInstance.vcpu}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6} sm={4} md={3}>
+                      <Typography variant="body2">
+                        <strong>Memory:</strong> {selectedInstance.memory} GiB
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6} sm={4} md={3}>
+                      <Typography variant="body2">
+                        <strong>Network:</strong> {selectedInstance.network}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6} sm={4} md={3}>
+                      <Typography variant="body2">
+                        <strong>Storage:</strong> {selectedInstance.storage}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6} sm={4} md={3}>
+                      <Typography variant="body2">
+                        <strong>Current Gen:</strong> {selectedInstance.currentGen ? 'Yes' : 'No'}
+                      </Typography>
+                    </Grid>
                     {selectedInstance.gpu && (
-                      <> | <strong>GPU:</strong> {selectedInstance.gpu}</>
+                      <Grid item xs={6} sm={4} md={3}>
+                        <Typography variant="body2">
+                          <strong>GPU:</strong> {selectedInstance.gpu}
+                        </Typography>
+                      </Grid>
                     )}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Base hourly rate: ${selectedInstance.hourlyPrice}/hour
-                  </Typography>
+                    <Grid item xs={12}>
+                      <Typography variant="body2" color="primary.main" sx={{ mt: 1 }}>
+                        <strong>Base hourly rate:</strong> ${selectedInstance.hourlyPrice}/hour
+                      </Typography>
+                    </Grid>
+                  </Grid>
                 </Box>
               </Grid>
             )}
