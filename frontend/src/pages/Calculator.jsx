@@ -76,12 +76,68 @@ function Calculator() {
     setSaveDialogOpen(true);
   };
 
-  const handleSaveConfirm = () => {
-    // TODO: Implement save to backend
-    enqueueSnackbar('Estimate saved successfully!', { variant: 'success' });
-    setSaveDialogOpen(false);
-    setEstimateName('');
-    setEstimateDescription('');
+  const handleSaveConfirm = async () => {
+    if (isSaving) return; // Prevent duplicate submissions
+
+    try {
+      setIsSaving(true);
+
+      // Transform configured services to match backend schema
+      const transformedServices = configuredServices
+        .filter((s) => s.data)
+        .map((s) => {
+          const serviceData = s.data;
+
+          // Generate service name mapping
+          const serviceNameMap = {
+            'EC2': 'Elastic Compute Cloud',
+            'S3': 'Simple Storage Service',
+            'RDS': 'Relational Database Service',
+            'ECS': 'Elastic Container Service',
+            'Lambda': 'Lambda Functions',
+            'EKS': 'Elastic Kubernetes Service',
+            'Aurora': 'Aurora Database'
+          };
+
+          return {
+            id: s.id.toString(),
+            serviceCode: s.type,
+            serviceName: serviceNameMap[s.type] || s.type,
+            region: serviceData.region || 'us-east-1', // Use region from data or default
+            configuration: serviceData.configuration || serviceData, // Use configuration field if available, otherwise entire data
+            monthlyCost: serviceData.monthlyCost || 0
+          };
+        });
+
+      // Prepare estimate data
+      const estimateData = {
+        name: estimateName.trim(),
+        description: estimateDescription.trim() || undefined,
+        services: transformedServices,
+        totalMonthlyCost: calculatedTotal,
+      };
+
+      // Validate that we have services
+      if (estimateData.services.length === 0) {
+        enqueueSnackbar('Please configure at least one service before saving', { variant: 'warning' });
+        setIsSaving(false);
+        return;
+      }
+
+      // Dispatch create estimate action
+      await dispatch(createEstimate(estimateData)).unwrap();
+
+      // Success
+      enqueueSnackbar('Estimate saved successfully!', { variant: 'success' });
+      setSaveDialogOpen(false);
+      setEstimateName('');
+      setEstimateDescription('');
+    } catch (error) {
+      console.error('Save estimate error:', error);
+      enqueueSnackbar(error || 'Failed to save estimate', { variant: 'error' });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   // Handle share estimate
