@@ -486,6 +486,12 @@ function Calculator() {
                         onCostUpdate={(data) => handleCostUpdate(service.id, data)}
                       />
                     )}
+                    {service.type === 'EKS' && (
+                      <EKSConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
                   </Box>
                 ))}
               </Box>
