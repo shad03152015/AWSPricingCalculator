@@ -27,6 +27,7 @@ import RDSConfigForm from '../components/services/RDSConfigForm';
 import ECSConfigForm from '../components/services/ECSConfigForm';
 import LambdaConfigForm from '../components/services/LambdaConfigForm';
 import EKSConfigForm from '../components/services/EKSConfigForm';
+import AuroraConfigForm from '../components/services/AuroraConfigForm';
 import CostSummaryCard from '../components/CostSummaryCard';
 
 function Calculator() {
