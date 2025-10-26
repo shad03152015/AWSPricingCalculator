@@ -5,10 +5,18 @@ import { fetchEstimates } from '../store/slices/estimatesSlice';
 
 function Estimate() {
   const dispatch = useDispatch();
-  const { list, isLoading } = useSelector((state) => state.estimates);
+  const { list, isLoading, error } = useSelector((state) => state.estimates);
 
   useEffect(() => {
-    dispatch(fetchEstimates());
+    let mounted = true;
+
+    if (mounted) {
+      dispatch(fetchEstimates());
+    }
+
+    return () => {
+      mounted = false;
+    };
   }, [dispatch]);
 
   const formatDate = (dateString) => {
@@ -43,6 +51,16 @@ function Estimate() {
           <div className="text-center py-16">
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-aws-orange"></div>
             <p className="mt-4 text-gray-600">Loading estimates...</p>
+          </div>
+        ) : error ? (
+          <div className="text-center py-16 bg-white rounded-lg shadow-md">
+            <p className="text-red-600 mb-4">Error loading estimates: {error}</p>
+            <button
+              onClick={() => dispatch(fetchEstimates())}
+              className="bg-aws-orange text-white px-6 py-3 rounded-md hover:bg-orange-600 transition font-medium"
+            >
+              Retry
+            </button>
           </div>
         ) : list.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

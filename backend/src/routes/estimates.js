@@ -17,7 +17,8 @@ router.get('/', async (req, res) => {
     const { sort = '-createdAt', search } = req.query;
 
     // Build query
-    const query = { userId: req.user._id };
+    const query = { userId: req.user._id.toString() };
+    console.log(`[Estimates] Fetching estimates for userId: ${req.user._id}`);
 
     // Add search filter if provided
     if (search) {
@@ -26,6 +27,7 @@ router.get('/', async (req, res) => {
 
     // Fetch estimates
     const estimates = await Estimate.find(query).sort(sort);
+    console.log(`[Estimates] Found ${estimates.length} estimates`);
 
     res.status(200).json({
       success: true,
