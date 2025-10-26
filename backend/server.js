@@ -14,6 +14,32 @@ import sharedRoutes from './src/routes/shared.js';
 // Load environment variables
 dotenv.config();
 
+// Validate required environment variables
+const validateEnv = () => {
+  const required = ['JWT_SECRET'];
+  const missing = required.filter(key => !process.env[key]);
+
+  if (missing.length > 0) {
+    if (process.env.NODE_ENV === 'production') {
+      console.error('ERROR: Missing required environment variables:', missing.join(', '));
+      console.error('Please set these variables in your .env file or environment');
+      process.exit(1);
+    } else {
+      // Development mode: provide default with warning
+      console.warn('\n⚠️  WARNING: Missing environment variables:', missing.join(', '));
+      console.warn('⚠️  Using default values for development. DO NOT use in production!\n');
+
+      if (!process.env.JWT_SECRET) {
+        process.env.JWT_SECRET = 'dev-secret-key-change-in-production-' + Date.now();
+        console.warn('⚠️  JWT_SECRET: Using auto-generated development secret');
+        console.warn('⚠️  To fix: Copy .env.example to .env and set JWT_SECRET\n');
+      }
+    }
+  }
+};
+
+validateEnv();
+
 // Create Express app
 const app = express();
 
