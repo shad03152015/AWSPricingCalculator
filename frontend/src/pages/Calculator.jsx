@@ -380,6 +380,12 @@ function Calculator() {
                         onCostUpdate={(data) => handleCostUpdate(service.id, data)}
                       />
                     )}
+                    {service.type === 'ECS' && (
+                      <ECSConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
                   </Box>
                 ))}
               </Box>
