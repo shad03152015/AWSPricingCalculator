@@ -35,6 +35,7 @@ import CostSummaryCard from '../components/CostSummaryCard';
 function Calculator() {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
+  const location = useLocation();
   const { availableServices, services, totalMonthlyCost } = useSelector((state) => state.calculator);
 
   // State for dialogs
@@ -46,9 +47,41 @@ function Calculator() {
   // State for configured services
   const [configuredServices, setConfiguredServices] = useState([]);
 
+  // State for tracking if we're editing an estimate
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editingEstimateId, setEditingEstimateId] = useState(null);
+
   useEffect(() => {
     dispatch(loadAvailableServices());
   }, [dispatch]);
+
+  // Load estimate data when editing
+  useEffect(() => {
+    if (location.state?.estimate) {
+      const estimate = location.state.estimate;
+
+      // Set editing mode
+      setIsEditMode(true);
+      setEditingEstimateId(estimate._id);
+      setEstimateName(estimate.name);
+      setEstimateDescription(estimate.description || '');
+
+      // Load services from estimate
+      const loadedServices = estimate.services.map((service, index) => ({
+        id: Date.now() + index, // Generate unique IDs
+        type: service.serviceCode,
+        data: {
+          ...service.configuration,
+          monthlyCost: service.monthlyCost,
+          region: service.region,
+        },
+      }));
+
+      setConfiguredServices(loadedServices);
+
+      enqueueSnackbar(`Editing estimate: ${estimate.name}`, { variant: 'info' });
+    }
+  }, [location.state, enqueueSnackbar]);
 
   // Handle adding EC2 service
   const handleAddEC2 = () => {
