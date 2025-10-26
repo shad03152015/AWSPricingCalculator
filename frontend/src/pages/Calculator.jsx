@@ -760,6 +760,91 @@ function Calculator() {
                   </Box>
                 </AccordionDetails>
               </Accordion>
+
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Box display="flex" alignItems="center" gap={2}>
+                    <Typography variant="h6">More Database & Caching Services</Typography>
+                    <Chip label="5 services" size="small" color="primary" />
+                  </Box>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <Button variant="outlined" onClick={handleAddElastiCache} startIcon={<AddCircleOutlineIcon />}>Add ElastiCache</Button>
+                    <Button variant="outlined" onClick={handleAddDynamoDB} startIcon={<AddCircleOutlineIcon />}>Add DynamoDB</Button>
+                    <Button variant="outlined" onClick={handleAddDocumentDB} startIcon={<AddCircleOutlineIcon />}>Add DocumentDB</Button>
+                    <Button variant="outlined" onClick={handleAddNeptune} startIcon={<AddCircleOutlineIcon />}>Add Neptune</Button>
+                    <Button variant="outlined" onClick={handleAddRedshift} startIcon={<AddCircleOutlineIcon />}>Add Redshift</Button>
+                  </Box>
+                </AccordionDetails>
+              </Accordion>
+
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Box display="flex" alignItems="center" gap={2}>
+                    <Typography variant="h6">Networking & Content Delivery</Typography>
+                    <Chip label="3 services" size="small" color="primary" />
+                  </Box>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <Button variant="outlined" onClick={handleAddCloudFront} startIcon={<AddCircleOutlineIcon />}>Add CloudFront (CDN)</Button>
+                    <Button variant="outlined" onClick={handleAddRoute53} startIcon={<AddCircleOutlineIcon />}>Add Route 53 (DNS)</Button>
+                    <Button variant="outlined" onClick={handleAddAPIGateway} startIcon={<AddCircleOutlineIcon />}>Add API Gateway</Button>
+                  </Box>
+                </AccordionDetails>
+              </Accordion>
+
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Box display="flex" alignItems="center" gap={2}>
+                    <Typography variant="h6">Application Integration</Typography>
+                    <Chip label="4 services" size="small" color="primary" />
+                  </Box>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <Button variant="outlined" onClick={handleAddSNS} startIcon={<AddCircleOutlineIcon />}>Add SNS (Notifications)</Button>
+                    <Button variant="outlined" onClick={handleAddSQS} startIcon={<AddCircleOutlineIcon />}>Add SQS (Queues)</Button>
+                    <Button variant="outlined" onClick={handleAddEventBridge} startIcon={<AddCircleOutlineIcon />}>Add EventBridge</Button>
+                    <Button variant="outlined" onClick={handleAddStepFunctions} startIcon={<AddCircleOutlineIcon />}>Add Step Functions</Button>
+                  </Box>
+                </AccordionDetails>
+              </Accordion>
+
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Box display="flex" alignItems="center" gap={2}>
+                    <Typography variant="h6">Analytics & Big Data</Typography>
+                    <Chip label="4 services" size="small" color="primary" />
+                  </Box>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <Button variant="outlined" onClick={handleAddKinesis} startIcon={<AddCircleOutlineIcon />}>Add Kinesis</Button>
+                    <Button variant="outlined" onClick={handleAddEMR} startIcon={<AddCircleOutlineIcon />}>Add EMR</Button>
+                    <Button variant="outlined" onClick={handleAddGlue} startIcon={<AddCircleOutlineIcon />}>Add Glue (ETL)</Button>
+                    <Button variant="outlined" onClick={handleAddAthena} startIcon={<AddCircleOutlineIcon />}>Add Athena</Button>
+                  </Box>
+                </AccordionDetails>
+              </Accordion>
+
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Box display="flex" alignItems="center" gap={2}>
+                    <Typography variant="h6">Management & Security</Typography>
+                    <Chip label="4 services" size="small" color="primary" />
+                  </Box>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <Button variant="outlined" onClick={handleAddCloudWatch} startIcon={<AddCircleOutlineIcon />}>Add CloudWatch</Button>
+                    <Button variant="outlined" onClick={handleAddSystemsManager} startIcon={<AddCircleOutlineIcon />}>Add Systems Manager</Button>
+                    <Button variant="outlined" onClick={handleAddSecretsManager} startIcon={<AddCircleOutlineIcon />}>Add Secrets Manager</Button>
+                    <Button variant="outlined" onClick={handleAddWAF} startIcon={<AddCircleOutlineIcon />}>Add WAF</Button>
+                  </Box>
+                </AccordionDetails>
+              </Accordion>
             </Paper>
 
             {/* Configured Services */}
