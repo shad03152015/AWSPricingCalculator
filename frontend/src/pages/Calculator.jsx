@@ -25,6 +25,7 @@ import EC2ConfigForm from '../components/services/EC2ConfigForm';
 import S3ConfigForm from '../components/services/S3ConfigForm';
 import RDSConfigForm from '../components/services/RDSConfigForm';
 import ECSConfigForm from '../components/services/ECSConfigForm';
+import LambdaConfigForm from '../components/services/LambdaConfigForm';
 import CostSummaryCard from '../components/CostSummaryCard';
 
 function Calculator() {
