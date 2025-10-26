@@ -237,10 +237,20 @@ export function getAllInstanceTypes() {
         ...type,
         family,
         label: `${type.type} (${type.vcpu} vCPU, ${type.memory} GB RAM)`,
+        network: type.network || 'Variable',
+        storage: type.storage || 'EBS only',
+        currentGen: type.currentGen !== undefined ? type.currentGen : true,
       });
     });
   });
   return allTypes;
+}
+
+// Helper function to get unique vCPU counts
+export function getVCPUOptions() {
+  const allTypes = getAllInstanceTypes();
+  const vcpuSet = new Set(allTypes.map(t => t.vcpu));
+  return Array.from(vcpuSet).sort((a, b) => a - b);
 }
 
 // Helper function to calculate EC2 cost
