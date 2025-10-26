@@ -26,6 +26,8 @@ import S3ConfigForm from '../components/services/S3ConfigForm';
 import RDSConfigForm from '../components/services/RDSConfigForm';
 import ECSConfigForm from '../components/services/ECSConfigForm';
 import LambdaConfigForm from '../components/services/LambdaConfigForm';
+import EKSConfigForm from '../components/services/EKSConfigForm';
+import AuroraConfigForm from '../components/services/AuroraConfigForm';
 import CostSummaryCard from '../components/CostSummaryCard';
 
 function Calculator() {
@@ -88,6 +90,24 @@ function Calculator() {
       { id: Date.now(), type: 'Lambda', data: null },
     ]);
     enqueueSnackbar('Lambda service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding EKS service
+  const handleAddEKS = () => {
+    setConfiguredServices((prev) => [
+      ...prev,
+      { id: Date.now(), type: 'EKS', data: null },
+    ]);
+    enqueueSnackbar('EKS service added to calculator', { variant: 'success' });
+  };
+
+  // Handle adding Aurora service
+  const handleAddAurora = () => {
+    setConfiguredServices((prev) => [
+      ...prev,
+      { id: Date.now(), type: 'Aurora', data: null },
+    ]);
+    enqueueSnackbar('Aurora service added to calculator', { variant: 'success' });
   };
 
   // Handle removing service
@@ -181,14 +201,14 @@ function Calculator() {
                 Available Services
               </Typography>
               <Typography variant="body2" color="text.secondary" paragraph>
-                Select services to configure and estimate costs. Currently available: EC2, ECS, Lambda (Compute), S3 (Storage), and RDS (Database).
+                Select services to configure and estimate costs. Currently available: EC2, ECS, EKS, Lambda (Compute), S3 (Storage), RDS, and Aurora (Database).
               </Typography>
 
               <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <Box display="flex" alignItems="center" gap={2}>
                     <Typography variant="h6">Compute Services</Typography>
-                    <Chip label="3 services" size="small" color="primary" />
+                    <Chip label="4 services" size="small" color="primary" />
                   </Box>
                 </AccordionSummary>
                 <AccordionDetails>
@@ -302,6 +322,43 @@ function Calculator() {
                         </Button>
                       </Box>
                     </Paper>
+
+                    <Paper
+                      variant="outlined"
+                      sx={{
+                        p: 2,
+                        cursor: 'pointer',
+                        '&:hover': {
+                          bgcolor: 'action.hover',
+                          borderColor: 'primary.main',
+                        },
+                        transition: 'all 0.2s',
+                      }}
+                      onClick={handleAddEKS}
+                    >
+                      <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Box>
+                          <Typography variant="h6" fontWeight="bold" gutterBottom>
+                            EKS - Elastic Kubernetes Service
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            Managed Kubernetes clusters with EC2 or Fargate compute options
+                          </Typography>
+                          <Box mt={1}>
+                            <Chip label="Kubernetes" size="small" sx={{ mr: 1 }} />
+                            <Chip label="Available" size="small" color="success" />
+                          </Box>
+                        </Box>
+                        <Button
+                          variant="contained"
+                          color="error"
+                          startIcon={<AddCircleOutlineIcon />}
+                          onClick={handleAddEKS}
+                        >
+                          Add EKS
+                        </Button>
+                      </Box>
+                    </Paper>
                   </Box>
                 </AccordionDetails>
               </Accordion>
@@ -357,46 +414,86 @@ function Calculator() {
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <Box display="flex" alignItems="center" gap={2}>
                     <Typography variant="h6">Database Services</Typography>
-                    <Chip label="1 service" size="small" color="primary" />
+                    <Chip label="2 services" size="small" color="primary" />
                   </Box>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Paper
-                    variant="outlined"
-                    sx={{
-                      p: 2,
-                      cursor: 'pointer',
-                      '&:hover': {
-                        bgcolor: 'action.hover',
-                        borderColor: 'primary.main',
-                      },
-                      transition: 'all 0.2s',
-                    }}
-                    onClick={handleAddRDS}
-                  >
-                    <Box display="flex" justifyContent="space-between" alignItems="center">
-                      <Box>
-                        <Typography variant="h6" fontWeight="bold" gutterBottom>
-                          RDS - Relational Database Service
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Managed relational databases including MySQL, PostgreSQL, Aurora, SQL Server, and Oracle
-                        </Typography>
-                        <Box mt={1}>
-                          <Chip label="Database" size="small" sx={{ mr: 1 }} />
-                          <Chip label="Available" size="small" color="success" />
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <Paper
+                      variant="outlined"
+                      sx={{
+                        p: 2,
+                        cursor: 'pointer',
+                        '&:hover': {
+                          bgcolor: 'action.hover',
+                          borderColor: 'primary.main',
+                        },
+                        transition: 'all 0.2s',
+                      }}
+                      onClick={handleAddRDS}
+                    >
+                      <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Box>
+                          <Typography variant="h6" fontWeight="bold" gutterBottom>
+                            RDS - Relational Database Service
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            Managed relational databases including MySQL, PostgreSQL, SQL Server, and Oracle
+                          </Typography>
+                          <Box mt={1}>
+                            <Chip label="Database" size="small" sx={{ mr: 1 }} />
+                            <Chip label="Available" size="small" color="success" />
+                          </Box>
                         </Box>
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          startIcon={<AddCircleOutlineIcon />}
+                          onClick={handleAddRDS}
+                        >
+                          Add RDS
+                        </Button>
                       </Box>
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        startIcon={<AddCircleOutlineIcon />}
-                        onClick={handleAddRDS}
-                      >
-                        Add RDS
-                      </Button>
-                    </Box>
-                  </Paper>
+                    </Paper>
+
+                    <Paper
+                      variant="outlined"
+                      sx={{
+                        p: 2,
+                        cursor: 'pointer',
+                        '&:hover': {
+                          bgcolor: 'action.hover',
+                          borderColor: 'primary.main',
+                        },
+                        transition: 'all 0.2s',
+                      }}
+                      onClick={handleAddAurora}
+                    >
+                      <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Box>
+                          <Typography variant="h6" fontWeight="bold" gutterBottom>
+                            Aurora - Cloud-Native Database
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            MySQL and PostgreSQL-compatible with up to 5x performance - Serverless v2 and Global Database
+                          </Typography>
+                          <Box mt={1}>
+                            <Chip label="Database" size="small" sx={{ mr: 1 }} />
+                            <Chip label="Cloud-Native" size="small" sx={{ mr: 1 }} />
+                            <Chip label="Available" size="small" color="success" />
+                          </Box>
+                        </Box>
+                        <Button
+                          variant="contained"
+                          sx={{ bgcolor: '#FF9900', '&:hover': { bgcolor: '#FF9900', opacity: 0.9 } }}
+                          startIcon={<AddCircleOutlineIcon />}
+                          onClick={handleAddAurora}
+                        >
+                          Add Aurora
+                        </Button>
+                      </Box>
+                    </Paper>
+                  </Box>
                 </AccordionDetails>
               </Accordion>
             </Paper>
@@ -439,6 +536,18 @@ function Calculator() {
                         onCostUpdate={(data) => handleCostUpdate(service.id, data)}
                       />
                     )}
+                    {service.type === 'EKS' && (
+                      <EKSConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
+                    {service.type === 'Aurora' && (
+                      <AuroraConfigForm
+                        onRemove={() => handleRemoveService(service.id)}
+                        onCostUpdate={(data) => handleCostUpdate(service.id, data)}
+                      />
+                    )}
                   </Box>
                 ))}
               </Box>
@@ -457,7 +566,7 @@ function Calculator() {
                   No services configured yet
                 </Typography>
                 <Typography variant="body2" color="text.secondary" paragraph>
-                  Click "Add EC2", "Add ECS", "Add Lambda", "Add S3", or "Add RDS" above to start configuring your first service
+                  Click "Add EC2", "Add ECS", "Add Lambda", "Add EKS", "Add S3", "Add RDS", or "Add Aurora" above to start configuring your first service
                 </Typography>
               </Paper>
             )}
