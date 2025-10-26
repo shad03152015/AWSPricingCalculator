@@ -276,11 +276,23 @@ function Calculator() {
       <Container maxWidth="xl">
         {/* Page Header */}
         <Box mb={4}>
-          <Typography variant="h3" fontWeight="bold" gutterBottom>
-            AWS Pricing Calculator
-          </Typography>
+          <Box display="flex" alignItems="center" gap={2}>
+            <Typography variant="h3" fontWeight="bold" gutterBottom>
+              AWS Pricing Calculator
+            </Typography>
+            {isEditMode && (
+              <Chip
+                label="Editing"
+                color="primary"
+                size="medium"
+                sx={{ fontWeight: 'bold' }}
+              />
+            )}
+          </Box>
           <Typography variant="h6" color="text.secondary">
-            Configure AWS services and estimate your monthly costs
+            {isEditMode
+              ? `Editing estimate: ${estimateName}`
+              : 'Configure AWS services and estimate your monthly costs'}
           </Typography>
         </Box>
 
