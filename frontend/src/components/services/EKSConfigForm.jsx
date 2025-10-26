@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Paper,
   Typography,
@@ -59,12 +59,21 @@ function EKSConfigForm({ onRemove, onCostUpdate }) {
   const [costData, setCostData] = useState(null);
   const [selectedUseCase, setSelectedUseCase] = useState('');
 
+  // Use ref to store the latest onCostUpdate callback to avoid infinite loops
+  const onCostUpdateRef = useRef(onCostUpdate);
+
+  useEffect(() => {
+    onCostUpdateRef.current = onCostUpdate;
+  }, [onCostUpdate]);
+
   // Calculate cost whenever config changes
   useEffect(() => {
     const result = calculateEKSCost(config);
     setCostData(result);
-    onCostUpdate(result);
-  }, [config, onCostUpdate]);
+    if (onCostUpdateRef.current) {
+      onCostUpdateRef.current(result);
+    }
+  }, [config]);
 
   const handleConfigChange = (field, value) => {
     setConfig((prev) => ({
