@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
-  CalculatorIcon,
-  DocumentDuplicateIcon,
-  UserIcon,
-  ChartBarIcon
-} from '@heroicons/react/24/outline';
+  Calculate as CalculatorIcon,
+  Description as DocumentIcon,
+  Person as UserIcon,
+  BarChart as ChartBarIcon
+} from '@mui/icons-material';
 
 function Dashboard() {
   const { user } = useSelector((state) => state.auth);
