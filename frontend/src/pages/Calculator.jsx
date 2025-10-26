@@ -151,8 +151,7 @@ function Calculator() {
                 Available Services
               </Typography>
               <Typography variant="body2" color="text.secondary" paragraph>
-                Select services to configure and estimate costs. Currently showcasing EC2 as a
-                complete implementation.
+                Select services to configure and estimate costs. Currently available: EC2 (Compute) and S3 (Storage).
               </Typography>
 
               <Accordion>
